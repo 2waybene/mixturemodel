@@ -11,6 +11,8 @@ P <- function(x, mean, sd)
   variance <- sd^2
   exp(-(x-mean)^2/(2*variance)) / sqrt(2*pi*variance)
 }
+
+
 # integrate(P, -1, 1, mean=0, sd=1) is same as integrate(dnorm, -1, 1, mean=0, sd=1)
 # integrate(P,-5,5, mean=0, sd=1)   # should be close to 1.0
 
@@ -149,3 +151,14 @@ fit2
 #abline(h=0, v=0, lty="dotted")
 
 dev.off()
+
+#try a different Y now
+
+y <- P(x, 1.1, 2.0)
+set.seed(17)
+y <- y + rnorm(length(y), 1E-3, 1E-4)
+fit2 <- nls(y ~ (a/b)*exp(-(x-c)^2/(2*b^2)),
+            start=list(a=1/sqrt(2*pi*s.approx^2), b=s.approx, c=mu.approx),
+            control=nls.control(tol=1E-5, minFactor=1/1024),
+            trace=TRUE)
+fit2

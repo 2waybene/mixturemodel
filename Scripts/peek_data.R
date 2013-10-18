@@ -42,6 +42,22 @@ f <- "fmd_DT_raw.txt"
 f <- "oscc-olk1_parsed.txt"
 f_IN <- paste (file.dir, f , sep="")
 dt <- read.table(f_IN, header= F, sep = "\t")
+
+##==================================================
+##	Try to get mean and variance from Non-Linear
+##	regression, need to understand how to use it
+##==================================================
+str(dt)
+#y <- dt$V1
+#set.seed(17)
+#y <- y + rnorm(length(y), 1E-3, 1E-4)
+#fit.nls <- nls(y ~ (a/b)*exp(-(x-c)^2/(2*b^2)),
+#            start=list(a=1/sqrt(2*pi*s.approx^2), b=s.approx, c=mu.approx),
+#            control=nls.control(tol=1E-5, minFactor=1/1024),
+#            trace=TRUE)
+#fit.nls
+
+
 plotDensity(dt)
 
 mix.prob = 0.005
