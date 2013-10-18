@@ -122,4 +122,17 @@ coef(fit.pike)[3*1:4]
 # Standard deviations (s values)
 
 
-dev.off()
+ 
+##========================================================
+## Stat analysis	
+##========================================================
+
+f <- "x:/myGit/mixturemodel/data/oscc-olk1_parsed.txt"
+dt <- read.table(f, header= F, sep = "\t")
+length(dt$V1)
+dat <- density(dt$V1)
+str(dat)
+stats(dat$x)
+x.mean <- 
+plot(dat)
+
