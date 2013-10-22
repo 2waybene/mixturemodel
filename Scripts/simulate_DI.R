@@ -11,13 +11,35 @@
 
 
 
-sources("x:/myGit/mixturemodel/Scripts/mixtureModelFunctions.R")
+#sources("x:/myGit/mixturemodel/Scripts/mixtureModelFunctions.R")
+source("/Users/li11/myGit/mixturemodel/Scripts/mixtureModelFunctions.R")
 
 
-weight <- c(0.8999, 0.1, 0.0001)  # Three ranges: normal, diploid, aneuploid
 
-mean   <- c(1.001, 2.002, 3.003)
-sigma  <- c(0.75, 0.75, 0.75)
+##=====Sample data
+macFileDir <- "/Users/li11/myGit/mixturemodel/data/"
+f <- "fmd_DT_raw.txt"
+f <- "oscc-olk1_parsed.txt"
+f_IN <- paste (file.dir, f , sep="")
+f_IN <- paste (macFileDir, f , sep="")
+dt <- read.table(f_IN, header= F, sep = "\t")
+##=====End
+str(dt)
+temp.cv <- sd(dt$V1)/mean(dt$V1)
+temp.cv
+##======================================================================
+##  Based on our prior knowledge, we can focus on 
+##  three clusters of cell populations:
+##  Cluster one, with mean DI = 1.001
+##  Cluster two, with mean DI = 2.001
+##  Cluster three, with minimum DI > 2.300, assigning 2.300 as mean
+##  Now, let's assume that C.V. is same 
+##======================================================================
+
+mean <- c(1.001, 2.002, 2.300)
+sigma <- means*temp.cv
+weight <- c(0.893, 0.092, 0.05)
+
 
 
 Delta <- 0.01
@@ -28,25 +50,26 @@ y3 <- weight[3]*P(x, mean[3], sigma[3])
 y <- y1 + y2 + y3
 
 
-
 par(mfrow=c(1,1))
 
 plot(x,y, type="l", lwd=3,
-     main="Heming Lake Pike: Distribution by Age Groups",
-     xlab="Length [cm]", ylab="Probability Density")
+     main="Simulated D.I. values: three-category groups",
+     xlab="D.I. value", ylab="Probability Density")
 abline(h=0, lty="dotted")
 lines(x,y1, col="red")
 lines(x,y2, col="green")
 lines(x,y3, col="blue")
 
+lgd = c("Mixture", "Normal, mean = 1.001", "Mitotic, mean = 2.002", "Aneuploid, mean = 2.300")
+legend ("topright", lgd, text.col = c("black", "red", "green", "blue"))
 
 derivative1 <- Deriv1(x,y)
 derivative2 <- Deriv2(x,y)
 
 par(mfrow=c(3,1))
 plot(x,y, type="l", lwd=3,
-  main="Heming Lake Pike: Distribution by Age Groups",
-  xlab="Length [cm]", ylab="Probability Density")
+  main="Simulated D.I. values: three-category groups",
+  xlab="D.I. value", ylab="Probability Density")
 abline(h=0, lty="dotted")
 
 lines(x,y1, col="red")
@@ -127,7 +150,7 @@ coef(fit.pike)[3*1:4]
 ## Stat analysis	
 ##========================================================
 
-f <- "x:/myGit/mixturemodel/data/oscc-olk1_parsed.txt"
+f <- "/Users/li11/myGit/mixturemodel/data/oscc-olk1_parsed.txt"
 dt <- read.table(f, header= F, sep = "\t")
 length(dt$V1)
 dat <- density(dt$V1)

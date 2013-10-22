@@ -7,6 +7,7 @@
 winDir <- "C:/Users/li11/Documents/"
 winProjDir <- "x:/"
 linuxDir <- "~/"
+macFileDir <- "/Users/li11/myGit/mixturemodel/data/"
 
 library(gplots)
 library(Rlab)
@@ -41,6 +42,7 @@ file.dir <-paste (winProjDir,"/myGit/mixturemodel/data/", sep="")
 f <- "fmd_DT_raw.txt"
 f <- "oscc-olk1_parsed.txt"
 f_IN <- paste (file.dir, f , sep="")
+f_IN <- paste (macFileDir, f , sep="")
 dt <- read.table(f_IN, header= F, sep = "\t")
 
 ##==================================================
