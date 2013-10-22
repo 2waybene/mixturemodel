@@ -11,22 +11,30 @@
 
 
 
-#sources("x:/myGit/mixturemodel/Scripts/mixtureModelFunctions.R")
-source("/Users/li11/myGit/mixturemodel/Scripts/mixtureModelFunctions.R")
+source("x:/myGit/mixturemodel/Scripts/mixtureModelFunctions.R")
+#source("/Users/li11/myGit/mixturemodel/Scripts/mixtureModelFunctions.R")
 
 
 
 ##=====Sample data
 macFileDir <- "/Users/li11/myGit/mixturemodel/data/"
+winFileDir <- "x:/myGit/mixturemodel/data/"
+
 f <- "fmd_DT_raw.txt"
 f <- "oscc-olk1_parsed.txt"
 f_IN <- paste (file.dir, f , sep="")
 f_IN <- paste (macFileDir, f , sep="")
+f_IN <- paste (winFileDir, f , sep="")
+##=====End of settings
+
 dt <- read.table(f_IN, header= F, sep = "\t")
-##=====End
+
 str(dt)
 temp.cv <- sd(dt$V1)/mean(dt$V1)
 temp.cv
+
+##=====End
+
 ##======================================================================
 ##  Based on our prior knowledge, we can focus on 
 ##  three clusters of cell populations:
@@ -37,7 +45,7 @@ temp.cv
 ##======================================================================
 
 mean <- c(1.001, 2.002, 2.300)
-sigma <- means*temp.cv
+sigma <- mean*temp.cv
 weight <- c(0.893, 0.092, 0.05)
 
 
@@ -50,6 +58,10 @@ y3 <- weight[3]*P(x, mean[3], sigma[3])
 y <- y1 + y2 + y3
 
 
+#integrate(P, 0,7, mean[1], sigma[1])
+#integrate(P, 0,7, mean[2], sigma[2])
+#integrate(P, 0,7, mean[3], sigma[3])
+
 par(mfrow=c(1,1))
 
 plot(x,y, type="l", lwd=3,
@@ -60,7 +72,7 @@ lines(x,y1, col="red")
 lines(x,y2, col="green")
 lines(x,y3, col="blue")
 
-lgd = c("Mixture", "Normal, mean = 1.001", "Mitotic, mean = 2.002", "Aneuploid, mean = 2.300")
+lgd = c("Mixture", "Normal, mean = 1.001", "Mitotic,  mean = 2.002", "Aneuploid, mean = 2.300")
 legend ("topright", lgd, text.col = c("black", "red", "green", "blue"))
 
 derivative1 <- Deriv1(x,y)
@@ -147,15 +159,21 @@ coef(fit.pike)[3*1:4]
 
  
 ##========================================================
-## Stat analysis	
+## Summary data from 29 samples
 ##========================================================
 
-f <- "/Users/li11/myGit/mixturemodel/data/oscc-olk1_parsed.txt"
-dt <- read.table(f, header= F, sep = "\t")
-length(dt$V1)
-dat <- density(dt$V1)
-str(dat)
-stats(dat$x)
-x.mean <- 
-plot(dat)
+
+f <- "summary_dt.txt";
+f_IN <- paste (file.dir, f , sep="")
+f_IN <- paste (macFileDir, f , sep="")
+f_IN <- paste (winFileDir, f , sep="")
+##=====End of settings
+
+dt <- read.table(f_IN, header= T, sep = "\t")
+
+str(dt)
+
+summary(dt$Mean3)
+
+
 
