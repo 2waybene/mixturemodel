@@ -45,9 +45,13 @@ temp.cv
 ##======================================================================
 
 mean <- c(1.001, 2.002, 2.300)
+mean <- c(1.001, 2.002, 3.600)
+mean <- c(0.936, 1.692, 3.600)
+sigma <- c(0.19, 0.25,0.5) 
 sigma <- mean*temp.cv
-weight <- c(0.893, 0.092, 0.05)
 
+weight <- c(0.893, 0.092, 0.05)
+weight <- c(0.425, 0.425, 0.05)
 
 
 Delta <- 0.01
@@ -133,9 +137,16 @@ derivative2$y[valleys.Deriv2]
 mu.approx <-  derivative2$x[valleys.Deriv2]
 mu.approx
 
+
 # Peaks
 derivative2$x[peaks.Deriv2]
 derivative2$y[peaks.Deriv2]
+
+
+# Valleys
+derivative2$x[valleys.Deriv2]
+derivative2$y[valleys.Deriv2]
+
 
 
 # Attempt non-linear curve fit to extract the parameters

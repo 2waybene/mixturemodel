@@ -1,7 +1,7 @@
 # efg, 15 Aug 2006
 # Data from http://www.math.mcmaster.ca/peter/mix/demex/expike.html
 
-pdf("HemingLakePike.pdf", width=8.0, height=10.0)
+#pdf("HemingLakePike.pdf", width=8.0, height=10.0)
 
 library(Hmisc)
 
@@ -221,4 +221,4 @@ coef(fit.pike)[3*1:4]
 # Standard deviations (s values)
 
 
-dev.off()
+#dev.off()
