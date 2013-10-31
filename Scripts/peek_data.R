@@ -58,9 +58,11 @@ str(dt)
 #            control=nls.control(tol=1E-5, minFactor=1/1024),
 #            trace=TRUE)
 #fit.nls
+stats(dt$V1)
 
-
-plotDensity(dt)
+library(affy)
+plotDensity(dt$V1, main = "Sample data on D.I. values", xlab = "DNA Index (DI) values")
+mtext("658 cells selected")
 
 mix.prob = 0.005
 mix.prob = 0.95
