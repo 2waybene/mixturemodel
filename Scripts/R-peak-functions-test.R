@@ -9,8 +9,6 @@ source("x:/myGit/mixturemodel/Scripts/mixtureModelFunctions.R")
 
 ##	Three (really two) peaks data
 mean <- c(1.001, 2.002, 2.300)
-#mean <- c(1.001, 2.002, 3.600)
-#mean <- c(0.936, 1.692, 3.600)
 sigma <- c(0.19, 0.25,0.5) 
 
 weight <- c(0.893, 0.092, 0.05)
@@ -43,6 +41,8 @@ legend ("topright", lgd, text.col = c("black", "red", "green", "blue"))
 ##	Calling peaks...
 
 peakx <- peak.quick(x,y)
+peakx
+
 peakx <- peak.quick(x,y1)
 peakx #found the obvious peaks, but miss the trivil one(s)!!
 

@@ -31,7 +31,7 @@
 
 ##========Implementation starts here....===============================
 
-P <- function(x, mean, sd)
+P <- function(x, mean, sd)  #-- Test DONE --#
 {
   variance <- sd^2
   exp(-(x-mean)^2/(2*variance)) / sqrt(2*pi*variance)
@@ -39,8 +39,7 @@ P <- function(x, mean, sd)
 
 
 
-
-peaks <- function(series,span=3)
+peaks <- function(series,span=3)   #-- Test DONE --#
 {
   z <- embed(series, span)
   s <- span%/%2
@@ -51,8 +50,44 @@ peaks <- function(series,span=3)
 }
 
 
+# First derivative.  Adjust x values to be center of interval.
+# Spacing of x-points need not be uniform
+Deriv1 <- function(x,y)  #-- Test DONE --#
+{
+  y.prime <- diff(y) / diff(x)
+  x.prime <- x[-length(x)] + diff(x)/2
+  list(x = x.prime,
+       y = y.prime)
+}
+
+# "Centered" 2nd-derivative. Spacing of x-points assumed to be uniform.
+Deriv2 <- function(x,y)  #-- Test DONE --#
+{
+  h <- x[2] - x[1]
+  Range <- 2:(length(x)-1)  # Drop first and last points
+  list(x = x[Range],
+       y = (y[Range+1] - 2*y[Range] + y[Range-1]) / h^2)
+}
+
+##==================================##
+##	Peak functions here		##
+##==================================##
+
+
+##	peak.quick	##-- Test DONE --#
+
+
+peak.quick <- function (x, y){
+
+	return(x[which(diff(sign(diff(y)))==-2)])
+}
+
+
+##==============================================
 # First derivative from splinefun 
 # Same as Deriv1
+# The following functions are yet to be tested
+##==============================================
 
 firstDerivative = function (x, y ) {
 
@@ -64,24 +99,6 @@ firstDerivative = function (x, y ) {
 } # end of function
 
 
-# First derivative.  Adjust x values to be center of interval.
-# Spacing of x-points need not be uniform
-Deriv1 <- function(x,y)
-{
-  y.prime <- diff(y) / diff(x)
-  x.prime <- x[-length(x)] + diff(x)/2
-  list(x = x.prime,
-       y = y.prime)
-}
-
-# "Centered" 2nd-derivative. Spacing of x-points assumed to be uniform.
-Deriv2 <- function(x,y)
-{
-  h <- x[2] - x[1]
-  Range <- 2:(length(x)-1)  # Drop first and last points
-  list(x = x[Range],
-       y = (y[Range+1] - 2*y[Range] + y[Range-1]) / h^2)
-}
 
 weighted.stats <- function(name, weights)
 {
