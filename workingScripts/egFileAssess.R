@@ -10,7 +10,7 @@ library(affy)
 scriptDir <- "X:/myGit/mixturemodel/workingScripts/"
 workingDir  <- "X:/myGit/mixturemodel/workingDir/"
 dataDir <- "X:/myGit/mixturemodel/data/dt_12032013/"
-
+dataDir <- "X:/myGit/mixturemodel/data/dt_01232014/"
 
 setwd(workingDir)
 
