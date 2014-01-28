@@ -1,5 +1,5 @@
 source("x:/R-project/customPackages/dataManipTools.R")
-source("x://R-project/customPackages/arraySeqTools.R")
+source("x:/R-project/customPackages/arraySeqTools.R")
 source("x:/R-project/customPackages/plotTools.R")
 source("X:/project2012/ASE/R-scripts/functions-ASE.R")
 
