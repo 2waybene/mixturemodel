@@ -1,3 +1,8 @@
+##	need to define root: mac, linux or windows
+
+dir <- "/myGit/mixturemodel/oldScripts/"
+dir <- paste (root, dir, sep="")
+source (paste(dir, "HemingLakePike.R", sep=""))
 y <- y1 + y2 + y3 
 
 par(mfrow=c(1,1))

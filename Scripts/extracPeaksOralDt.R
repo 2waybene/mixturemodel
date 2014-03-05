@@ -16,6 +16,7 @@ f_IN <- paste (winFileDir, f , sep="")
 dt <- read.csv (f_IN)
 title = paste ("sample_", sub(".csv", "", f), sep="")
 plotDensity(as.data.frame(dt$DNA_Index), ylab = "Density", xlab = "DNA Index value", main= title )
+
 plot(as.data.frame(dt$DNA_Index), ylab = "Density", xlab = "DNA Index value", main= title )
 
 
