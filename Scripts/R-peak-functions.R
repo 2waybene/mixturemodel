@@ -5,7 +5,15 @@
 ##	Comment  : This custom function is a collection of peak
 ##		     finding functions. 
 ##=============================================================
-source("x:/myGit/mixturemodel/Scripts/mixtureModelFunctions.R")
+
+mac.os  <- "/Users/li11/"
+linux   <- "~/"
+windows <- "X:/"
+
+##  package needed
+root <- mac.os
+
+source(paste(root, "myGit/mixturemodel/Scripts/mixtureModelFunctions.R", sep=""))
 
 
 ###
