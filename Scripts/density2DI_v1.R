@@ -16,6 +16,7 @@ windows <- "X:/"
 root <- windows
 
 
+
 ##	simulated data and density plot
 
 library(lattice)
@@ -33,19 +34,40 @@ ggplot(dat, aes(x = dens, fill = lines)) + geom_density(alpha = 0.5)
 
 plot(density(dat$dens))
 
+mix.den <- density(dat$dens)
+str(mix.den)
+
 ##===============================
 ##	Can we find the peak
-##===============================
+##=========================================
+library(Rlab) #dataset precip is masked!!!
+
 which(dat$lines=="a")
 den1.dt <- dat$dens[which(dat$lines=="a")]
 den2.dt <- dat$dens[which(dat$lines=="b")]
 
-den1 <- density(den1.dt)
-den2 <- density(den2.dt)
+summary(den1.dt)
+stats(den1.dt)
+summary(den2.dt)
+stats(den2.dt)
 
+mix.again <- c(den1.dt, den2.dt)
+str(mix.again)
+
+plot(density(mix.again))
+
+den <- density(mix.again)
+str(den)
+
+peak.quick(den$x, den$y)
+den1 <- density(den1.dt)
+stats(den1)
+den2 <- density(den2.dt)
+stats(den2)
 
 y = den1$y + den2$y
 
+plot(density(y))
 ##	D.I. values
 
 
