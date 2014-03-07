@@ -1,5 +1,5 @@
 ##=============================================================
-##	Script: density2DI_v1.R
+##	Script: density2DI_v3.R
 ##	Author: Jianying Li
 ##	Comment: finalized from density, mixture model, and 
 ##		   peak finding and will be applied to D.I.
@@ -14,58 +14,6 @@ windows <- "X:/"
 
 ##	package needed
 root <- windows
-
-
-##	simulated data and density plot
-
-library(lattice)
-dat <- data.frame(dens = c(rnorm(100), rnorm(100, 10, 5))
-                   , lines = rep(c("a", "b"), each = 100))
-densityplot(~dens,data=dat,groups = lines,
-            plot.points = FALSE, ref = TRUE, 
-            auto.key = list(space = "right"))
-
-library(ggplot2)
-ggplot(dat, aes(x = dens, fill = lines)) + geom_density(alpha = 0.5)
-
-
-##	Assuming mixture case
-
-plot(density(dat$dens))
-
-##===============================
-##	Can we find the peak
-##===============================
-which(dat$lines=="a")
-den1.dt <- dat$dens[which(dat$lines=="a")]
-den2.dt <- dat$dens[which(dat$lines=="b")]
-
-den1 <- density(den1.dt)
-den2 <- density(den2.dt)
-
-
-y = c(den1.dt,den2.dt)
-plot(density(y))
-
-
-#Sample data with unbalanced proportion
-
-dat.2 <- data.frame(dens = c(rnorm(1000), rnorm(10, 10, 5))  , lines = c(rep("a",1000), rep( "b", 10)))
-densityplot(~dens, data=dat.2, groups = lines,  plot.points = FALSE, ref = TRUE, auto.key = list(space = "right"))
-
-plot(density(dat.2$dens), main = "Density of mixture of two data sets")
-plot(density(dat.2$dens[which(dat.2$lines=="a")]), main = "Density of 1000 norm sim data")
-plot(density(dat.2$dens[-which(dat.2$lines=="a")]), main = "Density of 10 norm (10,5) sim data")
-
-
-#Plot.
-
-
-library(ggplot2)
-ggplot(dat.2, aes(x = dens, fill = lines)) + geom_density(alpha = 0.5)
-
-library(lattice)
-densityplot(~dens,data=dat.2, groups = lines, plot.points = FALSE, ref = TRUE, auto.key = list(space = "right"))
 
 ##========================================================
 #	On a real D.I. value data
@@ -135,14 +83,66 @@ first.den  <- density(dt.first + peaks[1])
 first.sim.den <- density(sim.dt.first)
 
 
+##======================================================
+##  Now, let's work on removing the first population
+##======================================================
 
 ##  standardize den$y, so that the integral will equal 1
 sum(first.sim.den$y)
-tem <- first.sim.den
-tem$y <- first.sim.den$y/365.0299
+first.den <- density(dt.first + peaks[1])
+str(first.den)
+sum(first.den$y)
+
+#tem <- first.sim.den
+#tem$y <- first.sim.den$y/365.0299
+
+tem <- first.den
+tem$y <- first.den$y/sum(first.den$y)
 plot(tem)
 str(tem)
 
 
-((tem$y[256]+tem$y[257])/2)*1778
- 
+##  Filter starts here...
+dt.raw.flt.1 <- dt.raw[which(dt.raw >=  peaks[1])]
+str(dt.raw.flt.1)
+max(dt.first+peaks[1])
+dt.raw.02 <- dt.raw.flt.1[which(dt.raw.flt.1 >=max(dt.first+peaks[1]))]
+str(dt.raw.02)
+
+dt.raw.flt.2 <- dt.raw.flt.1[-which(dt.raw.flt.1 >=max(dt.first+peaks[1]))]
+summary(dt.raw.flt.2)
+
+plot(density(tem$x))
+
+str(tem$x)
+
+dt2filter <- dt.raw.flt.2
+str(dt2filter)
+for (i in 1:256)
+{
+  l.bound <- i + 255
+  h.bound <- i + 256
+  num.of.data <- (tem$y[l.bound] + tem$y[h.bound])/2*1778
+  candidate <- which(dt2filter > tem$x[l.bound] & dt2filter  < tem$x[h.bound])
+  if (length(candidate) >=1)
+  {
+    if (length(candidate) > floor(num.of.data))
+    {
+      data2exclude <- sample(candidate, floor(num.of.data))
+      if (length(data2exclude) >=1 )
+      {
+        dt2filter <- dt2filter[-data2exclude]
+      }
+    }else{
+      dt2filter <- dt2filter[-candidate]
+    }
+  }
+}
+
+str(dt2filter)
+
+dt.raw.02 <- c(dt.raw.02, dt2filter)
+str(dt.raw.02)
+plot(density(dt.raw.02))
+
+dt.second.pop <- dt.raw.02
