@@ -76,7 +76,7 @@ first.mean <- mean(dt.first+peaks[2])
 first.sd   <- sd(dt.first + peaks[2])
 first.den  <- density(dt.first + peaks[2])
 first.sim.den <- density(sim.dt.first)
-
+save (first.mean, first.sd , file = "sample_128110_stat_pop2.rda")
 
 ##======================================================
 ##  Now, let's work on removing the first population

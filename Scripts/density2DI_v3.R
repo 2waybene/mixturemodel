@@ -88,7 +88,7 @@ first.sd   <- sd(dt.first + peaks[1])
 first.den  <- density(dt.first + peaks[1])
 first.sim.den <- density(sim.dt.first)
 
-
+save (first.mean, first.sd , file = "sample_128110_stat_pop1.rda")
 ##======================================================
 ##  Now, let's work on removing the first population
 ##======================================================
@@ -177,3 +177,5 @@ plot(density(dt.raw.02), main ="Density after removing the first population")
 
 dt.second.pop <- dt.raw.02
 str(dt.second.pop)
+
+
