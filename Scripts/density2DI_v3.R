@@ -21,10 +21,13 @@ root <- windows
 
 
 f_IN <-  paste (root, "myGit/mixturemodel/data/128110.csv", sep ="")
+#f_IN <-  paste (root, "myGit/mixturemodel/data/dt_01232014/9559572.csv", sep ="")
+
 dt <- read.csv (f_IN)
-title = paste ("sample_", sub(".csv", "", f), sep="")
 title = "Sample_128110 density"
 plot(density(as.vector(dt$DNA_Index)), ylab = "Density", xlab = "DNA Index value", main= title )
+mtext ("Getting the peaks...")
+stats(as.vector(dt$DNA_Index))
 
 
 get.den <- density(as.vector(dt$DNA_Index))
@@ -42,7 +45,7 @@ peaks <- peak.quick (get.den$x, get.den$y)
 str(peaks)
 
 plot(get.den$x, get.den$y)
-get.den$x < peaks[1]
+
 
 ##===================================
 # Let's see how far can I do in R
@@ -50,6 +53,7 @@ get.den$x < peaks[1]
 
 dt.raw <- as.vector (dt$DNA_Index)
 summary(dt.raw)
+stats(dt.raw)
 dt.raw - peaks[1]
 length(dt.raw)
 
@@ -61,9 +65,11 @@ dt.first.left <- dt.normed[which(dt.normed < 0)]
 dt.first.right <- -dt.first.left
 dt.first <- c(dt.first.left, dt.first.right)
 plot(density(dt.first))
-plot(density(dt.first + peaks[1]))
-sim.dt.first <- rnorm(1778, peaks[1], (sd(dt.first+peaks[1])))
-plot(density(sim.dt.first), bw=0.01613)
+plot(density(dt.first + peaks[1]), main = "Density from the left most population")
+
+sim.dt.first <- rnorm(length(dt.first), peaks[1], (sd(dt.first+peaks[1])))
+plot(density(sim.dt.first), main = "Density from simulated left most population")
+
 
 summary(sim.dt.first)
 which(dt.raw == (dt.first + peaks[1]))
@@ -93,8 +99,6 @@ first.den <- density(dt.first + peaks[1])
 str(first.den)
 sum(first.den$y)
 
-#tem <- first.sim.den
-#tem$y <- first.sim.den$y/365.0299
 
 tem <- first.den
 tem$y <- first.den$y/sum(first.den$y)
@@ -103,46 +107,73 @@ str(tem)
 
 
 ##  Filter starts here...
+
+##	Retain data on the right of the first peak
+##			SAME AS
+##	Remove data on the left  of the fist peak
+
 dt.raw.flt.1 <- dt.raw[which(dt.raw >=  peaks[1])]
 str(dt.raw.flt.1)
+
+##	Retain data on the right of max of the first population
 max(dt.first+peaks[1])
 dt.raw.02 <- dt.raw.flt.1[which(dt.raw.flt.1 >=max(dt.first+peaks[1]))]
 str(dt.raw.02)
 
+
+##	Data fall between the right of the first peak and the left of max of the first population
 dt.raw.flt.2 <- dt.raw.flt.1[-which(dt.raw.flt.1 >=max(dt.first+peaks[1]))]
 summary(dt.raw.flt.2)
+str(dt.raw.flt.2)
+
+
+##	Now, remove the data according to the "estimated proportion"
+##	Between two adjacent populations
+
 
 plot(density(tem$x))
-
 str(tem$x)
 
+adjust = 0; 
 dt2filter <- dt.raw.flt.2
 str(dt2filter)
 for (i in 1:256)
 {
-  l.bound <- i + 255
-  h.bound <- i + 256
-  num.of.data <- (tem$y[l.bound] + tem$y[h.bound])/2*1778
-  candidate <- which(dt2filter > tem$x[l.bound] & dt2filter  < tem$x[h.bound])
-  if (length(candidate) >=1)
-  {
-    if (length(candidate) > floor(num.of.data))
-    {
-      data2exclude <- sample(candidate, floor(num.of.data))
-      if (length(data2exclude) >=1 )
-      {
-        dt2filter <- dt2filter[-data2exclude]
-      }
-    }else{
-      dt2filter <- dt2filter[-candidate]
-    }
-  }
+temp = 0
+	l.bound <- i + 255
+	h.bound <- i + 256
+	num.of.data <- ((tem$y[l.bound] + tem$y[h.bound])/2)*(length(dt.first))
+	candidate <- which(dt2filter > tem$x[l.bound] & dt2filter  < tem$x[h.bound])
+
+	if (length(candidate) >=1)
+  	{
+    		if (length(candidate) > floor(num.of.data))
+    		{
+			temp = num.of.data - floor(num.of.data)
+      		data2exclude <- sample(candidate, floor(num.of.data))
+      		if (length(data2exclude) >=1 )
+      		{
+        			dt2filter <- dt2filter[-data2exclude]	
+				adjust = adjust + temp
+      		}
+		}else{
+      		dt2filter <- dt2filter[-candidate]
+    		}
+  	}
 }
 
 str(dt2filter)
 
+
+num2salvage <- sample (c(1:length(dt2filter)), ceiling(adjust)) 	#FIXME: Manully fixting
+dt2filter <- dt2filter[-num2salvage]
+num2salvage <- sample (c(1:length(dt2filter)), 138)			#FIXME: Manully fixting!!!
+dt2filter <- dt2filter[-num2salvage]
+str(dt2filter)
+
 dt.raw.02 <- c(dt.raw.02, dt2filter)
 str(dt.raw.02)
-plot(density(dt.raw.02))
+plot(density(dt.raw.02), main ="Density after removing the first population")
 
 dt.second.pop <- dt.raw.02
+str(dt.second.pop)

@@ -1,5 +1,5 @@
 ##=============================================================
-##	Script: density2DI_v4.R
+##	Script: density2DI_v5.R
 ##	Author: Jianying Li
 ##	Comment: finalized from density, mixture model, and 
 ##		   peak finding and will be applied to D.I.
@@ -15,16 +15,7 @@ windows <- "X:/"
 ##	package needed
 root <- windows
 
-
-
-##=============================================
-# result from first filtering
-# dt.second.pop <- dt.raw.02
-##=============================================
-
-get.den <- density(dt.second.pop)
-plot(get.den, ylab = "Density", xlab = "DNA Index value", main= title )
-
+##========================================================
 
 peak.quick <- function (x, y){
   
@@ -33,21 +24,27 @@ peak.quick <- function (x, y){
 
 
 
-str(get.den)
-peaks <- peak.quick (get.den$x, get.den$y)
-str(peaks)
-
 
 ##===================================
 # Let's see how far can I do in R
 ##===================================
-
-dt.raw <- dt.second.pop
+dt.raw <- dt2work
 summary(dt.raw)
-dt.raw - peaks[2]
+stats(dt.raw)
+
+
+##===================
+##	getting peaks
+##===================
+get.den <- density(dt.raw)
+peaks <- peak.quick (get.den$x, get.den$y)
+str(peaks)
+
+
+dt.raw - peaks[1]
 length(dt.raw)
 
-dt.normed = dt.raw - peaks[2] 
+dt.normed = dt.raw - peaks[1] 
 which(dt.normed > 0)
 which(dt.normed < 0)
 
@@ -55,16 +52,16 @@ dt.first.left <- dt.normed[which(dt.normed < 0)]
 dt.first.right <- -dt.first.left
 dt.first <- c(dt.first.left, dt.first.right)
 plot(density(dt.first))
-plot(density(dt.first + peaks[2]))
-str(dt.first)
-sim.dt.first <- rnorm(1308, peaks[2], (sd(dt.first+peaks[2])))
-plot(density(sim.dt.first), bw=0.01613)
+plot(density(dt.first + peaks[1]), main = "Density from the left most population")
+
+sim.dt.first <- rnorm(length(dt.first), peaks[1], (sd(dt.first+peaks[1])))
+plot(density(sim.dt.first), main = "Density from simulated left most population")
+
 
 summary(sim.dt.first)
-which(dt.raw == (dt.first + peaks[2]))
-summary(dt.first + peaks[2])
-mean(dt.first+peaks[2])
-sd(dt.first + peaks[2])
+summary(dt.first + peaks[1])
+mean(dt.first+peaks[1])
+sd(dt.first + peaks[1])
 
 summary(dt.raw)
 
@@ -72,9 +69,9 @@ peak.quick(density(sim.dt.first)$x, density(sim.dt.first)$y)
 
 
 ##  Fact about first part
-first.mean <- mean(dt.first+peaks[2])
-first.sd   <- sd(dt.first + peaks[2])
-first.den  <- density(dt.first + peaks[2])
+first.mean <- mean(dt.first+peaks[1])
+first.sd   <- sd(dt.first + peaks[1])
+first.den  <- density(dt.first + peaks[1])
 first.sim.den <- density(sim.dt.first)
 
 
@@ -84,7 +81,7 @@ first.sim.den <- density(sim.dt.first)
 
 ##  standardize den$y, so that the integral will equal 1
 sum(first.sim.den$y)
-first.den <- density(dt.first + peaks[2])
+first.den <- density(dt.first + peaks[1])
 str(first.den)
 sum(first.den$y)
 
@@ -101,26 +98,25 @@ str(tem)
 ##			SAME AS
 ##	Remove data on the left  of the fist peak
 
-dt.raw.flt.1 <- dt.raw[which(dt.raw >=  peaks[2])]
+dt.raw.flt.1 <- dt.raw[which(dt.raw >=  peaks[1])]
 str(dt.raw.flt.1)
 
-
 ##	Retain data on the right of max of the first population
-max(dt.first+peaks[2])
-dt.raw.02 <- dt.raw.flt.1[which(dt.raw.flt.1 >=max(dt.first+peaks[2]))]
+max(dt.first+peaks[1])
+dt.raw.02 <- dt.raw.flt.1[which(dt.raw.flt.1 >=max(dt.first+peaks[1]))]
 str(dt.raw.02)
 
 
 ##	Data fall between the right of the first peak and the left of max of the first population
-dt.raw.flt.2 <- dt.raw.flt.1[-which(dt.raw.flt.1 >=max(dt.first+peaks[2]))]
+dt.raw.flt.2 <- dt.raw.flt.1[-which(dt.raw.flt.1 >=max(dt.first+peaks[1]))]
 summary(dt.raw.flt.2)
 str(dt.raw.flt.2)
+
 
 ##	Now, remove the data according to the "estimated proportion"
 ##	Between two adjacent populations
 
-plot(density(tem$x))
-str(tem$x)
+
 
 
 adjust = 0; 
@@ -152,26 +148,15 @@ temp = 0
 }
 
 str(dt2filter)
-adjust
 
-num2salvage <- sample (c(1:length(dt2filter)), ceiling(adjust)) 	#FIXME: Manully fixting
-#num2salvage <- sample (c(1:length(dt2filter)), 138)			#FIXME: Manully fixting!!!
-dt2filter <- dt2filter[-num2salvage]
 
-num2salvage <- sample (c(1:length(dt2filter)), length(which(dt2filter < (first.mean + first.sd))))
-dt2filter <- dt2filter[-num2salvage]
+#num2salvage <- sample (c(1:length(dt2filter)), ceiling(adjust)) 	#FIXME: Manully fixting
+#dt2filter <- dt2filter[-num2salvage]
+
 str(dt2filter)
-plot(density(dt2filter))
 
 dt.raw.02 <- c(dt.raw.02, dt2filter)
 str(dt.raw.02)
-summary(dt.raw.02)
-plot(density(dt.raw.02), main = "After removing both normal and replicating populations")
+plot(density(dt.raw.02), main ="D.I. from aneuploidy population")
 stats(dt.raw.02)
 
-get.den <- density(dt.raw.02)
-peaks <- peak.quick (get.den$x, get.den$y)
-str(peaks)
-
-
-dt2work <- dt.raw.02

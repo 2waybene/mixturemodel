@@ -51,7 +51,7 @@ plot(density(y))
 #Sample data with unbalanced proportion
 
 dat.2 <- data.frame(dens = c(rnorm(1000), rnorm(10, 10, 5))  , lines = c(rep("a",1000), rep( "b", 10)))
-densityplot(~dens, data=dat.2, groups = lines,  plot.points = FALSE, ref = TRUE, auto.key = list(space = "right"))
+densityplot(~dens, data=dat.2, groups = lines,  plot.points = FALSE, ref = TRUE, auto.key = list(space = "right"), main = "Two populations in 10:1 ratio")
 
 plot(density(dat.2$dens), main = "Density of mixture of two data sets")
 plot(density(dat.2$dens[which(dat.2$lines=="a")]), main = "Density of 1000 norm sim data")
