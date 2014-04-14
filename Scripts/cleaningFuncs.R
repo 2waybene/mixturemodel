@@ -8,14 +8,25 @@ peak.quick <- function (x, y){
 
 getFirstPop <- function (dtIN)
 {
-  peak.quick <- function (x, y){
-    return(x[which(diff(sign(diff(y)))==-2)])
-  }
   get.den <- density(dtIN)
   peaks <- peak.quick (get.den$x, get.den$y)
 #str(peaks)
 
   dt.normed = dtIN - peaks[1] 
+  dt.first.left <- dt.normed[which(dt.normed < 0)]
+  dt.first.right <- -dt.first.left
+  dt.first <- c(dt.first.left, dt.first.right)
+  str(dt.first)
+  return (dt.first)
+}
+
+getPopWIndex <- function (dtIN, where2start)
+{
+  get.den <- density(dtIN)
+  peaks <- peak.quick (get.den$x, get.den$y)
+  #str(peaks)
+  
+  dt.normed = dtIN - peaks[where2start] 
   dt.first.left <- dt.normed[which(dt.normed < 0)]
   dt.first.right <- -dt.first.left
   dt.first <- c(dt.first.left, dt.first.right)
