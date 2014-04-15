@@ -241,7 +241,7 @@ stats(aneup.pop)
 
 aneu <- list ("AneuLeft" = aneup.pop)
 cleanedSample <- c(cleanedSample, aneu)
-#cleanedSample
+cleanedSample
 
 #cleanedSample$sample
 
