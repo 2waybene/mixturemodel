@@ -10,7 +10,7 @@ lines(density(x))
 y <- rkde(fhat=kde(x=x, h=hpi(x)), n=100, positive=TRUE)
 hist(y, col="green", freq=F)
 
-
+par(mfrow=c(1,1))
 set.seed(1)
 x<-rlnorm(100)
 hist(x, prob=TRUE)

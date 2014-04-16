@@ -6,12 +6,21 @@ mac.os  <- "/Users/li11/"
 linux   <- "~/"
 windows <- "X:/"
 
+##=============================================
+# Three criteria
+# aneuploidy: > 2.3c --> three populations
+# mitotic: >1.7c --> two populations
+# normal??
 
+aneuThresh = 2.3
+mitoThresh = 1.7
 ##=============================================
 ##  Read in data
 ##=============================================
 #root <- windows
 root <- mac.os
+
+source (paste (root, "myGit/mixturemodel/Scripts/cleaningFuncs.R", sep = ""))
 rawFiles <- list.files (paste(root, "myGit/mixturemodel/data/dt_01232014/OSCC/",sep=""), pattern = "csv")
 rawFiles
 
@@ -31,7 +40,7 @@ fileName <- paste("myGit/mixturemodel/data/dt_01232014/OSCC/", rawFiles[i], sep 
 ##========================================================
 #  On a real D.I. value data
 ##=========================================================
-source (paste (root, "myGit/mixturemodel/Scripts/cleaningFuncs.R", sep = ""))
+
 
 
 f_IN <-  paste (root, fileName, sep ="")
@@ -50,6 +59,19 @@ cleanedSample <-  list("sample" = sampleName)
 ##============================
 
 dt <- read.csv (f_IN)
+
+## determine how many families are we dealing with
+numOfFamily <-  1 # minimun one family
+
+if (length(which(as.vector(dt$DNA_Index) > aneuThresh)) > 1)
+{
+  numOfFamily = 3
+}else if (length(which(as.vector(dt$DNA_Index) > mitoThresh)) > 1)
+{
+  numOfFamily = 2
+}
+
+##===================================================================
 get.den <- density(as.vector(dt$DNA_Index))
 peaks <- peak.quick (get.den$x, get.den$y)
 peaks
@@ -70,12 +92,18 @@ if (peaks[length(which(peaks<1)) + 1] < 1.2)
 
 
 index
+
+##============================================
+##  clean starts here with first population
+##============================================
 dt.raw <- as.vector (dt$DNA_Index)
 firstDT <- getPopWIndex (dt.raw, index)
 
-##  Save first population stats
-FP_mean <- mean(firstDT + peaks[index])
-FP_std <- sd(firstDT + peaks[index])
+##  Save first population dt
+FP_dt_primary <- firstDT + peaks[index]
+
+#FP_mean <- mean(firstDT + peaks[index])
+#FP_std <- sd(firstDT + peaks[index])
 
 dt.cleaned <- cleanFirstPop(peaks[index], firstDT, dt.raw)
 #plot(density(dt.cleaned))
@@ -88,8 +116,6 @@ dt.cleaned <- cleanFirstPop(peaks[index], firstDT, dt.raw)
 firstDT <- getFirstPop(dt.cleaned)
 #plot(density(firstDT))
 peaks <- peak.quick(density(dt.cleaned)$x, density(dt.cleaned)$y)
-
-
 peaks
 
 ##=========================================
