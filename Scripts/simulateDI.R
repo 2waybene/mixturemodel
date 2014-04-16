@@ -13,8 +13,10 @@ windows <- "X:/"
 ##=============================================
 ##  Read in data
 ##=============================================
-#root <- windows
-root <- mac.os
+root <- windows
+#root <- mac.os
+
+source (paste (root, "/myGit/mixturemodel/Scripts/simDt_functions.R", sep=""))
 
 
 mean.norm <- c()
@@ -157,6 +159,8 @@ plot(x,y, type="l", lwd=3,
      main="Heming Lake Pike: Distribution by Age Groups",
      xlab="Length [cm]", ylab="Probability Density")
 
+
+
 num2sample <- 1000 - length(cleanedSample$AneuLeft)
 
 simDt <- rkde(fhat=kde(x=y, h=hpi(y)), n=num2sample, positive=TRUE)
@@ -164,5 +168,5 @@ simDt <- rkde(fhat=kde(x=y, h=hpi(y)), n=num2sample, positive=TRUE)
 stats(simDt)
 
 
-histinfo <- hist(simDt, col="green", freq=F, breaks=50)
+histinfo <- hist(simDt, col="green", freq=F, breaks=15)
 histinfo

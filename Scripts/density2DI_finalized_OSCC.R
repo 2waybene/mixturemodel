@@ -124,17 +124,20 @@ peaks
 ##  if there is any peaks less than 1.2
 ##===========================================
 
+##Need to add the "cleaned back to population one"!!
+
 if (peaks[1] < 1.2)
 {
   dt.another.clean <- cleanFirstPop(peaks[1], firstDT, dt.cleaned)
 #  plot(density(dt.another.clean))
   dt.1pop.cleaned <- dt.another.clean
-  FP_count <- (length(dt.raw) - length(dt.1pop.cleaned))
-
 }else{
   dt.1pop.cleaned <- dt.cleaned
-  FP_count <- length(firstDT + peak[index])
 }
+
+FP_mean <- mean(FP_dt_primary)
+FP_std <- sd(FP_dt_primary)
+  FP_count <- (length(dt.raw) - length(dt.1pop.cleaned))
 
 FP <- list ("FP_mean" = FP_mean, "FP_std" = FP_std, "FP_count" = FP_count)
 cleanedSample <- c(cleanedSample, FP)
@@ -167,8 +170,10 @@ if (length(which(peaks < 1.5)) >=1 )
   secondDT <- getPopWIndex (dt.1pop.cleaned, index)
 #plot(density(secondDT))
 ##  Save first population stats
-  SP_mean <- mean(secondDT + peaks[index])
-  SP_std <- sd(secondDT + peaks[index])
+SP_dt_primary <- (secondDT + peaks[index])
+
+#  SP_mean <- mean(secondDT + peaks[index])
+#  SP_std <- sd(secondDT + peaks[index])
 
 #plot(density(secondDT + peaks[index]))
 
@@ -176,7 +181,7 @@ if (length(which(peaks < 1.5)) >=1 )
 secondDT.cleaned <- cleanFirstPop(peaks[index],  secondDT, dt.1pop.cleaned)
 #str(secondDT.cleaned)
 #plot(density(secondDT.cleaned))
-
+}
 
 ##==================================
 ##  Need another round of cleaning
@@ -222,6 +227,8 @@ third_round = 1
   secondDT.2.cleaned <- secondDT.cleaned
   
 }
+
+
 ##  third round??
 
 if (third_round)
