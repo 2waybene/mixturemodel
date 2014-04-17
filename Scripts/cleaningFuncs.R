@@ -110,3 +110,77 @@ cleanFirstPop <- function ( firstPeak,
   
 }
 
+followUpClean  <- function ( firstPeak, 
+                            dt.first, 
+                            dt.raw  )
+  
+{
+  ##  Filter starts here...
+  #returnList <- list()
+  
+  first.den <- density(dt.first + firstPeak)
+  tempDen <-  first.den
+  tempDen$y <- first.den$y/sum(first.den$y)
+  
+  ##  Retain data on the right of the first peak
+  ##      SAME AS
+  ##  Remove data on the left  of the fist peak
+  
+  dt.right.of.peak <- dt.raw[which(dt.raw >=  firstPeak)]
+  
+  ##	Retain data on the right of max of the first population
+  
+  dt.right.of.peak.max <- dt.right.of.peak [which(dt.right.of.peak >=max(dt.first+firstPeak))]
+  
+  ##	Data fall between the right of the first peak and the left of max of the first population
+  dt.between.peak.max <- dt.right.of.peak [-which(dt.right.of.peak >=max(dt.first+firstPeak))]
+  
+  ##	Now, remove the data according to the "estimated proportion"
+  ##	Between two adjacent populations
+  
+  adjust = 0; 
+  dt2filter <- dt.between.peak.max
+ # dtRetain  <- 0
+  #	str(dt2filter)
+  for (i in 1:256)
+  {
+    temp = 0
+    l.bound <- i + 255
+    h.bound <- i + 256
+    num.of.data <- ((tempDen$y[l.bound] + tempDen$y[h.bound])/2)*(length(dt.first))
+    candidate <- which(dt2filter > tempDen$x[l.bound] & dt2filter  < tempDen$x[h.bound])
+    if (length(candidate) >=1)
+    {
+      if (length(candidate) > floor(num.of.data))
+      {
+        temp = num.of.data - floor(num.of.data)
+        data2exclude <- sample(candidate, floor(num.of.data))
+        if (length(data2exclude) >=1 )
+        {
+          dt2filter     <- dt2filter[-data2exclude]	
+          dtRetainTemp  <- dt.between.peak.max[data2exclude]
+          dtRetain <- c(dtRetain, dtRetainTemp)
+          adjust = adjust + temp
+        }
+      }else{
+        dt2filter     <- dt2filter[-candidate]
+        dtRetainTemp  <- dt.between.peak.max[candidate]
+        dtRetain <- c(dtRetain, dtRetainTemp)
+      }
+    }
+  }
+  
+  
+  
+  num2salvage <- sample (c(1:length(dt2filter)), ceiling(adjust)) 	#FIXME: Manully fixting
+  if (length(num2salvage) > 0)
+  {
+    dt2filter <- dt2filter[-num2salvage]
+    dtRetainTemp  <- dt.between.peak.max[num2salvage]
+    dtRetain <- c(dtRetain, dtRetainTemp)
+  } 
+  dt.retain <- c(dt.right.of.peak.max, dt2filter)
+  returnList <- list(dtFiltered = dtRetain, dtRetain = dt.retain)
+  return (returnList)
+  
+}
