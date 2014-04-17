@@ -140,7 +140,7 @@ followUpClean  <- function ( firstPeak,
   
   adjust = 0; 
   dt2filter <- dt.between.peak.max
- # dtRetain  <- 0
+  dt2retain  <- 0
   #	str(dt2filter)
   for (i in 1:256)
   {
@@ -159,13 +159,13 @@ followUpClean  <- function ( firstPeak,
         {
           dt2filter     <- dt2filter[-data2exclude]	
           dtRetainTemp  <- dt.between.peak.max[data2exclude]
-          dtRetain <- c(dtRetain, dtRetainTemp)
+          dt2retain <- c(dt2retain, dtRetainTemp)
           adjust = adjust + temp
         }
       }else{
         dt2filter     <- dt2filter[-candidate]
         dtRetainTemp  <- dt.between.peak.max[candidate]
-        dtRetain <- c(dtRetain, dtRetainTemp)
+        dt2retain <- c(dt2retain, dtRetainTemp)
       }
     }
   }
@@ -177,10 +177,30 @@ followUpClean  <- function ( firstPeak,
   {
     dt2filter <- dt2filter[-num2salvage]
     dtRetainTemp  <- dt.between.peak.max[num2salvage]
-    dtRetain <- c(dtRetain, dtRetainTemp)
+    dt2retain <- c(dt2retain, dtRetainTemp)
   } 
-  dt.retain <- c(dt.right.of.peak.max, dt2filter)
-  returnList <- list(dtFiltered = dtRetain, dtRetain = dt.retain)
+
+  dt.retained <- c(dt.right.of.peak.max, dt2filter)
+  returnList <- list(dtFiltered = dt2retain, dtRetained = dt.retained)
   return (returnList)
   
+}
+
+
+tryDensity <- function(dt) {
+    out <- tryCatch(
+        {
+     		den <- density(dt, warn=FALSE) 
+        },
+        error=function(cond) {
+             return(NA)
+        },
+        warning=function(cond) {
+               return(NULL)
+        },
+        finally={
+     #       message(paste("Somthing is wrong with the ", dt))
+         }
+    )    
+    return(out)
 }

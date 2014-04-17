@@ -1,5 +1,5 @@
 ##==============================================================
-##  FileName: DI2rda_v1 .R
+##  FileName: DI2rda_v3.R
 ##  Author: Jianying Li
 ##  Comment: this is "n" version of the script with goals
 ##           (1) Determine how many populations to save
@@ -14,6 +14,7 @@
 ##              a. count, mean and std for normal family
 ##              b. count, mean and std for mitotic family
 ##              c. D.I. values for aneuploidy family
+##		So far, works perfectly fine with OSCC data!!
 ##=============================================================
 
 
@@ -48,18 +49,13 @@ normMax    = 1.2 ## For additional round of cleaning
 ##=============================================
 
 rawFiles <- list.files (paste(root, "myGit/mixturemodel/data/dt_01232014/OSCC/",sep=""), pattern = "csv")
-rawFiles
+
 
 
 for (i in 1:length(rawFiles))
-#for (i in 19:length(rawFiles))
 {
 
 
-#i = 17
-#i = 22
-
-#print (rawFiles[i])
 
 	fileName <- paste("myGit/mixturemodel/data/dt_01232014/OSCC/", rawFiles[i], sep ="")
 	f_IN <-  paste (root, fileName, sep ="")
@@ -127,32 +123,26 @@ index
 ##============================================
 
 	firstDT <- getPopWIndex (dt.raw, index)
+
 ##  Save first population dt
 	FP_dt_primary <- firstDT + peaks[index]
-
 	dt.cleaned <- cleanFirstPop(peaks[index], firstDT, dt.raw)
 
-#temp <- followUpClean (peaks[index], firstDT, dt.raw)
-#plot(density(dt.cleaned))
-#str(dt.cleaned)
 
 ##================================
 ##  Second round if ever needed
 ##================================
-	
-	dt.raw  <- dt.cleaned
-	firstDT <- ""
-	get.gen <- ""
-	peaks   <- c()
+	if (length (get.den <- tryDensity (dt.cleaned)) >=1 )	
+	{
+		dt.raw  <- dt.cleaned
+		firstDT <- ""
+		get.gen <- ""
+		peaks   <- c()
 
-	index = 1
-
-
-	firstDT <- getPopWIndex (dt.raw, index)
-#plot(density(firstDT))
-
-	get.den <- density(dt.raw)
-	peaks <- peak.quick (get.den$x, get.den$y)
+		index = 1
+		firstDT <- getPopWIndex (dt.raw, index) ##FIXME, yep breaks at sample 88!!!!
+		get.den <- density(dt.raw)
+		peaks <- peak.quick (get.den$x, get.den$y)
 peaks
 
 ##=========================================
@@ -162,34 +152,45 @@ peaks
 ##===========================================
 
 ##Need to add the "cleaned back to population one"!!
-	dt.clean.return = list()
 
-	if (peaks[1] < normMax )
-	{
-  #dt.another.clean <- cleanFirstPop(peaks[1], firstDT, dt.cleaned)
-  		dt.clean.return <- followUpClean (peaks[1], firstDT, dt.raw)
-#  plot(density(dt.another.clean))
-#  dt.1pop.cleaned <- dt.another.clean
+		dt.clean.return = list()
+		if (peaks[1] < normMax )
+		{
+
+  			dt.clean.return <- followUpClean (peaks[1], firstDT, dt.raw)
+
   #if (length(dt.clean.return$dtFiltered) > 0) #
-    		if (length(dt.clean.return$dtFiltered) > 1) #FIXME, there was a bug
-  		{
-    			FP_dt_primary <- c(FP_dt_primary, dt.clean.return$dtFiltered)
-  		}
-  		dt.1pop.cleaned <- dt.clean.return$dtRetain
-	}else{
-  		dt.1pop.cleaned <- dt.cleaned
-	}
+	    		if (length(dt.clean.return$dtFiltered) > 1) #FIXME, there was a bug
+  			{
+    				FP_dt_primary <- c(FP_dt_primary, dt.clean.return$dtFiltered)
+  			}
+  			dt.1pop.cleaned <- dt.clean.return$dtRetain
+		}else{
+  			dt.1pop.cleaned <- dt.cleaned
+		}
 
 ##===================================
 ##  Storing the cleaning results
 ##===================================
 
-	FP_mean  <- mean(FP_dt_primary)
-	FP_std   <- sd(FP_dt_primary)
-	FP_count <- length(FP_dt_primary)
-	FP <- list ("FP_mean" = FP_mean, "FP_std" = FP_std, "FP_count" = FP_count)
-	cleanedSample <- c(cleanedSample, FP)
+		FP_mean  <- mean(FP_dt_primary)
+		FP_std   <- sd(FP_dt_primary)
+		FP_count <- length(FP_dt_primary)
+		FP <- list ("FP_mean" = FP_mean, "FP_std" = FP_std, "FP_count" = FP_count)
+		cleanedSample <- c(cleanedSample, FP)
 #cleanedSample
+	} ## END of round two tryCatch
+	else
+	{
+		FP_mean  <- mean(FP_dt_primary)
+		FP_std   <- sd(FP_dt_primary)
+		FP_count <- length(FP_dt_primary)
+		FP <- list ("FP_mean" = FP_mean, "FP_std" = FP_std, "FP_count" = FP_count)
+		cleanedSample <- c(cleanedSample, FP)
+dt.1pop.cleaned <- dt.cleaned 
+
+	}
+
 
 
 ##===========================================
@@ -222,23 +223,25 @@ peaks
 		SP_dt_primary <- (secondDT + peaks[index])
 		secondDT.cleaned <- cleanFirstPop(peaks[index],  secondDT, dt.raw)
 	}
-
+index 
 ##=====================================
 ##  Need another round of cleaning??
 ##=====================================
-
-	dt.raw  <- secondDT.cleaned
-	firstDT <- ""
-	get.gen <- ""
-	peaks   <- c()
-
-
-	get.den <- density(dt.raw)
-	peaks <- peak.quick (get.den$x, get.den$y)
-	peaks
-
-	if (length(which(peaks < mitoThresh)) >=1 )  ## Yes, we do
+	if (length (get.den <- tryDensity (secondDT.cleaned)) >=1 )
+	##If not, no need.
 	{
+		dt.raw  <- secondDT.cleaned
+		firstDT <- ""
+		get.gen <- ""
+		peaks   <- c()
+
+
+		get.den <- density(dt.raw)
+		peaks <- peak.quick (get.den$x, get.den$y)
+		peaks
+
+		if (length(which(peaks < mitoThresh)) >=1 )  ## Yes, we do
+		{
 
 ##=====================================
 ##	Need another round of cleaning
@@ -246,84 +249,90 @@ peaks
 
 ##  Determine where to start the first population
 
-		index = 0
-		third_round = 0
+			index = 0
+			third_round = 0
 
-		if (length(peaks) > normMax  &  length(which(peaks < mitoThresh)) >= 1)
-		{
-  			index =  which(peaks <  mitoThresh) [length(which(peaks <  mitoThresh))]
-		}
-
-index
-
-
-		if (index >=1)
-		{
-  			secondDT.round2 <- getPopWIndex (dt.raw , index)
-			secondDT.round2_primary <- (secondDT.round2 + peaks[index])
-			SP_dt_primary <- c( SP_dt_primary, secondDT.round2_primary)
-			secondDT.round2.cleaned <- cleanFirstPop(peaks[index],  secondDT.round2, dt.raw)
-			dt.2pop.cleaned <- secondDT.round2.cleaned		
-		}
-
-
-		dt.raw  <- secondDT.round2.cleaned 
-		firstDT <- ""
-		get.gen <- ""
-		peaks   <- c()
-		get.den <- density(dt.raw)
-		peaks <- peak.quick (get.den$x, get.den$y)
-		peaks
-
-		if (length(which(peaks < mitoThresh)) >=1 )  ## Even yes, this is the end
-		{
-			third_round = 1
 			if (length(peaks) > normMax  &  length(which(peaks < mitoThresh)) >= 1)
 			{
   				index =  which(peaks <  mitoThresh) [length(which(peaks <  mitoThresh))]
 			}
-
 index
 			if (index >=1)
 			{
-  				secondDT.round3 <- getPopWIndex (dt.raw , index)
-				secondDT.round3_primary <- (secondDT.round3 + peaks[index])
-				SP_dt_primary <- c( SP_dt_primary, secondDT.round3_primary)
-				secondDT.round3.cleaned <- cleanFirstPop(peaks[index],  secondDT.round2, dt.raw)
-				dt.2pop.cleaned <- secondDT.round3.cleaned
-			}		
+  				secondDT.round2 <- getPopWIndex (dt.raw , index)
+				secondDT.round2_primary <- (secondDT.round2 + peaks[index])
+				SP_dt_primary <- c( SP_dt_primary, secondDT.round2_primary)
+				secondDT.round2.cleaned <- cleanFirstPop(peaks[index],  secondDT.round2, dt.raw)
+				dt.2pop.cleaned <- secondDT.round2.cleaned		
+			}
+
+			if (!(length (get.den <- tryDensity (secondDT.round2.cleaned)) >=1 ))
+		##If not, no need.
+			{
+
+				dt.raw  <- secondDT.round2.cleaned 
+				firstDT <- ""
+				get.gen <- ""
+				peaks   <- c()
+				get.den <- density(dt.raw)
+				peaks <- peak.quick (get.den$x, get.den$y)
+				peaks
+
+				if (length(which(peaks < mitoThresh)) >=1 )  ## Even yes, this is the end
+				{
+					#third_round = 1
+					if (length(peaks) > normMax  &  length(which(peaks < mitoThresh)) >= 1)
+					{
+  						index =  which(peaks <  mitoThresh) [length(which(peaks <  mitoThresh))]
+					}
+index
+					if (index >=1)
+					{
+  						secondDT.round3 <- getPopWIndex (dt.raw , index)
+						secondDT.round3_primary <- (secondDT.round3 + peaks[index])
+						SP_dt_primary <- c( SP_dt_primary, secondDT.round3_primary)
+						secondDT.round3.cleaned <- cleanFirstPop(peaks[index],  secondDT.round2, dt.raw)
+						dt.2pop.cleaned <- secondDT.round3.cleaned
+					}		
+				}
+			}else{
+				dt.2pop.cleaned <- secondDT.cleaned
+			}
+
 		}
-	}else{
-		dt.2pop.cleaned <- secondDT.cleaned
-	}
-
-
 ##===================================
 ##  Storing the cleaning results
 ##===================================
 
-	SP_mean  <- mean(SP_dt_primary)
-	SP_std   <- sd(SP_dt_primary)
-	SP_count <- length(SP_dt_primary)
-	SP <- list ("SP_mean" = SP_mean, "SP_std" = SP_std, "SP_count" = SP_count)
-	cleanedSample <- c(cleanedSample, SP)
-#cleanedSample
-
-
+		SP_mean  <- mean(SP_dt_primary)
+		SP_std   <- sd(SP_dt_primary)
+		SP_count <- length(SP_dt_primary)
+		SP <- list ("SP_mean" = SP_mean, "SP_std" = SP_std, "SP_count" = SP_count)
+		cleanedSample <- c(cleanedSample, SP)
 
 ##=====================================
 # aneuploidy population of interest
-##=====================================
-	aneup.pop <- dt.2pop.cleaned
-#plot(density(aneup.pop))
-#stats(aneup.pop)
+##=====================================	
+		aneup.pop <- dt.2pop.cleaned
+		aneu <- list ("AneuLeft" = aneup.pop)
+		cleanedSample <- c(cleanedSample, aneu)
+		cleanedSample
 
-	aneu <- list ("AneuLeft" = aneup.pop)
-	cleanedSample <- c(cleanedSample, aneu)
-	cleanedSample
-
-#cleanedSample$sample
-
+	} ## end of first tryDensity
+	
+	else 
+	{
+		SP_mean  <- mean(SP_dt_primary)
+		SP_std   <- sd(SP_dt_primary)
+		SP_count <- length(SP_dt_primary)
+		SP <- list ("SP_mean" = SP_mean, "SP_std" = SP_std, "SP_count" = SP_count)
+		cleanedSample <- c(cleanedSample, SP)
+		
+		aneup.pop <- secondDT.cleaned 
+		aneu <- list ("AneuLeft" = aneup.pop)
+		cleanedSample <- c(cleanedSample, aneu)
+		cleanedSample
+	}
 
 ##==========================
 ##  Saving the results
@@ -331,10 +340,7 @@ index
 
 	storage.dir <- paste (root, "myGit/mixturemodel/cleanedData/OSCC/", sep = "")
 	file2save <- paste (storage.dir, "cleaned_", cleanedSample$sample, ".rda", sep="")
-#file2save
 	save (cleanedSample, file = file2save)
-
-
 
 }
 
