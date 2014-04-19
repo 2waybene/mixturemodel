@@ -2,9 +2,9 @@
 # Need to source ~/myGit/mixturemodel/Scripts/simDt_functions.R
 #	normal population
 ##======================================================
-#	File name: recontrData-v1.R
+#	File name: recontrData-v2.R
 #	Author: Jianying Li
-#	Comment: used to convert OSCC to 
+#	Comment: used to convert OSCC to data with 16 varialbes
 ##=====================================================
 library(Rlab)
 
@@ -23,81 +23,88 @@ root <- mac.os
 
 source (paste (root, "myGit/mixturemodel/Scripts/cleaningFuncs.R", sep = ""))
 source (paste (root, "myGit/mixturemodel/Scripts/simDt_functions.R", sep = ""))
+source (paste (root, "myGit/mixturemodel/Scripts/reconstrDtFunctions.R", sep = ""))
 
 dt.dir <- paste (root, "/myGit/mixturemodel/cleanedData/OLK/", sep="")
 
 files <- list.files (path = dt.dir, pattern=".rda")
-files
-
-aneuMax = 0;
-aneuMin = 2.3;
-
-reconStrDt <- list(c())
-
 dt.return <- ""
 
 for (k in 1:length(files))
 {
- #k =1
-#i =10
+  
+  load(paste(dt.dir, files[k], sep=""))
+  popNum = 3
+  if (cleanedSample$AneuLeft == "" || length(cleanedSample$AneuLeft) == 0)
+  {
+    popNum = 2
+  }
 
-   load(paste(dt.dir, files[k], sep=""))
-
-str(cleanedSample)
-str(cleanedSample$AneuLeft)
-
-	#Make it 8 if greater than 8
-	if (cleanedSample$AneuLeft == "")
-	{
-		popNum = 2
-	}
-
-	cleanedSample$AneuLeft[which(cleanedSample$AneuLeft > 8)] <- 8 
-
+  #Make it 8 if greater than 8
+  if (popNum == 3)
+  {
+	  cleanedSample$AneuLeft[which(cleanedSample$AneuLeft > 8)] <- 8 
+  }
 	#if (is.na(cleanedSample$SP_count1))
-
-	ratio <- cleanedSample$FP_count/cleanedSample$SP_count
-
+  if (cleanedSample$SP_count >=5)
+  {
+	  ratio <- cleanedSample$FP_count/cleanedSample$SP_count
+  }else{
+    ratio <- 98/1.5
+  }
+  
+  
 	w.norm <- ratio/(1+ratio)
 	w.mito <- 1/(1+ratio)
 	x <- seq(0,2.3, by=(2.3/512))
 	x <- x[-1]
-	length(x)
-	y1 <- w.norm*P(x, cleanedSample$FP_mean, cleanedSample$FP_std)
-	y2 <- w.mito*P(x, cleanedSample$SP_mean, cleanedSample$SP_std)
 
-	y = y1 + y2
-length(y)
-length(x)
-
-
-plot(x,y/sum(y), type="l", lwd=3,
-     main="Heming Lake Pike: Distribution by Age Groups",
-     xlab="Length [cm]", ylab="Probability Density")
-
-
+  if (popNum == 3)
+  {
+    y1 <- w.norm*P(x, cleanedSample$FP_mean, cleanedSample$FP_std)
+	  y2 <- w.mito*P(x, cleanedSample$SP_mean, cleanedSample$SP_std)
+	  y = y1 + y2
+  }else if (popNum ==2)
+  {
+    if (is.na(cleanedSample$SP_mean))
+    {
+      cleanedSample$SP_std = fakeSP_std 
+      cleanedSample$SP_mean = fakeSP_mean
+    }else if (is.na(cleanedSample$SP_std))
+    {
+      cleanedSample$SP_std = fakeSP_std 
+    }
+      
+    y1 <- (w.norm*P(x, cleanedSample$FP_mean, cleanedSample$FP_std))*twoSampleRatio[1]
+    y2 <- (w.mito*P(x, cleanedSample$SP_mean, cleanedSample$SP_std))*twoSampleRatio[1]
+    y3 <- P(x, fake_aneu_mean, fake_aneu_std)*twoSampleRatio[2]
+    y = y1 + y2 + y3
+  }
+    
 	prob.y <- c()
 	pdf.y <- y/sum(y)
 	prob.y[1] <- pdf.y[1]
 
+  #Gettig the empirical cdf, very important here!!
 	for (i in 2:length(y))
 	{
 		temp.prob <- pdf.y[i]
 		prob.y[i] <- prob.y[i-1] + temp.prob
 	}
 
-
-	if (length(cleanedSample$AneuLeft) < 5)
-	{
-		num2Recontr <- 1000
-	}else{
-		num2Recontr <- 9*numOfAneu
-	}
+  if (popNum == 3)
+  {
+	  numOfAneu <- length(cleanedSample$AneuLeft)
+	  num2Recontr <- 9*numOfAneu
+  }else{
+    num2Recontr <- 1000
+  }
 
 	simDt <- c()
 	seed = 12345
 	for (i in 1:num2Recontr)
 	{
+    
 		x1 <- runif(1, 0, 1)
 		index <- which(prob.y < (x1 + 0.002) & prob.y > (x1 - 0.002))
 		if (length(index) < 1)
@@ -112,26 +119,18 @@ plot(x,y/sum(y), type="l", lwd=3,
 		simDt[i] <- x[temp]
 	}
 
-
-stats(simDt)
-
-	if (popNum ==3)
+  if (popNum == 3)
 	{
-		simDt <- c(simDt , cleanedSample$AneuLeft)
-	}
-
-
-plot(density(simDt))
+    simDt <- c(simDt , cleanedSample$AneuLeft)
+  }
 
 	bk = floor(max(simDt))*2
 	den <- (hist(simDt, breaks=bk)$density)
+
 	for (m in length(den):16)
 	{
-		den[m] <- 0.00001
+		den[m] <- filler
 	}
-
-#	reconStrDt[[k]]<- list (name=cleanedSample$sample, dat = den)
-
 	dt.temp <- as.data.frame(den)
 	colnames(dt.temp) <- cleanedSample$sample
 	dt.return <- cbind(dt.return, dt.temp)
@@ -139,4 +138,12 @@ plot(density(simDt))
 }
 
 olk.temp <- dt.return[,-1]
+dim(t(olk.temp))[1]
+label <- rep("c", dim(t(olk.temp))[1])
+olk.out <- cbind(t(olk.temp), as.data.frame(label))
+dim(olk.out)
 
+
+setwd(paste (root, "/myGit/mixturemodel/reconData/", sep=""))
+getwd()
+write.table (olk.out, "recon_olk_para1.txt", sep="\t", col.names = NA)
