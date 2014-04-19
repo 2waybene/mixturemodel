@@ -24,6 +24,8 @@ for (i in 1:20)
 {
 	mean.norm[i] <- runif (1, 0.9,1.2)
 }
+
+
 mean.normalP <- mean.norm[sample(1:20,1)]
 
 #	mitotic population
@@ -159,7 +161,8 @@ plot(x,y, type="l", lwd=3,
      main="Heming Lake Pike: Distribution by Age Groups",
      xlab="Length [cm]", ylab="Probability Density")
 
-
+x
+y
 
 num2sample <- 1000 - length(cleanedSample$AneuLeft)
 
