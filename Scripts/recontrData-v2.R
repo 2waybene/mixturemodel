@@ -26,6 +26,7 @@ source (paste (root, "myGit/mixturemodel/Scripts/simDt_functions.R", sep = ""))
 source (paste (root, "myGit/mixturemodel/Scripts/reconstrDtFunctions.R", sep = ""))
 
 dt.dir <- paste (root, "/myGit/mixturemodel/cleanedData/OLK/", sep="")
+lab <- "k"
 
 files <- list.files (path = dt.dir, pattern=".rda")
 dt.return <- ""
@@ -139,7 +140,7 @@ for (k in 1:length(files))
 
 olk.temp <- dt.return[,-1]
 dim(t(olk.temp))[1]
-label <- rep("c", dim(t(olk.temp))[1])
+label <- rep(lab, dim(t(olk.temp))[1])
 olk.out <- cbind(t(olk.temp), as.data.frame(label))
 dim(olk.out)
 

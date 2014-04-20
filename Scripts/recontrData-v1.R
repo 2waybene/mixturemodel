@@ -23,7 +23,10 @@ root <- mac.os
 
 source (paste (root, "myGit/mixturemodel/Scripts/cleaningFuncs.R", sep = ""))
 source (paste (root, "myGit/mixturemodel/Scripts/simDt_functions.R", sep = ""))
+source (paste (root, "myGit/mixturemodel/Scripts/reconstrDtFunctions.R", sep = ""))
+
 dt.dir <- paste (root, "/myGit/mixturemodel/cleanedData/OSCC/", sep="")
+lab <- "c"
 
 files <- list.files (path = dt.dir, pattern=".rda")
 dt.return <- ""
@@ -122,7 +125,7 @@ for (k in 1:length(files))
 
 oscc.temp <- dt.return[,-1]
 dim(t(oscc.temp))[1]
-label <- rep("c", dim(t(oscc.temp))[1])
+label <- rep(lab, dim(t(oscc.temp))[1])
 oscc.out <- cbind(t(oscc.temp), as.data.frame(label))
 dim(oscc.out)
 
@@ -130,3 +133,11 @@ dim(oscc.out)
 setwd(paste (root, "/myGit/mixturemodel/reconData/", sep=""))
 getwd()
 write.table (oscc.out, "recon_oscc_para1.txt", sep="\t", col.names = NA)
+
+
+combined.recon <- rbind (oscc.out, olk.out, normal.out)
+str(combined.recon)
+rownames(combined.recon)
+colnames(combined.recon)
+write.table (combined.recon, "recon_3classes_para1.txt", sep="\t", col.names = NA)
+
