@@ -28,6 +28,8 @@ source (paste (root, "myGit/mixturemodel/Scripts/reconstrDtFunctions.R", sep = "
 dt.dir <- paste (root, "/myGit/mixturemodel/cleanedData/OSCC/", sep="")
 lab <- "c"
 
+params <- para4()
+
 files <- list.files (path = dt.dir, pattern=".rda")
 dt.return <- ""
 
@@ -54,19 +56,28 @@ for (k in 1:length(files))
 	w.mito <- 1/(1+ratio)
 	x <- seq(0,2.3, by=(2.3/512))
 	x <- x[-1]
-
   if (popNum == 3)
   {
     y1 <- w.norm*P(x, cleanedSample$FP_mean, cleanedSample$FP_std)
-	  y2 <- w.mito*P(x, cleanedSample$SP_mean, cleanedSample$SP_std)
-	  y = y1 + y2
+    y2 <- w.mito*P(x, cleanedSample$SP_mean, cleanedSample$SP_std)
+    y = y1 + y2
   }else if (popNum ==2)
   {
-    y1 <- (w.norm*P(x, cleanedSample$FP_mean, cleanedSample$FP_std))*twoSampleRatio[1]
-    y2 <- (w.mito*P(x, cleanedSample$SP_mean, cleanedSample$SP_std))*twoSampleRatio[1]
-    y3 <- P(x, fake_aneu_mean, fake_aneu_std)*twoSampleRatio[2]
+    if (is.na(cleanedSample$SP_mean))
+    {
+      cleanedSample$SP_std = params$fakeSP_std 
+      cleanedSample$SP_mean = params$fakeSP_mean
+    }else if (is.na(cleanedSample$SP_std))
+    {
+      cleanedSample$SP_std = params$fakeSP_std 
+    }
+    
+    y1 <- (w.norm*P(x, cleanedSample$FP_mean, cleanedSample$FP_std))*params$twoSampleRatio[1]
+    y2 <- (w.mito*P(x, cleanedSample$SP_mean, cleanedSample$SP_std))*params$twoSampleRatio[1]
+    y3 <- P(x, params$fake_aneu_mean, params$fake_aneu_std)*params$twoSampleRatio[2]
     y = y1 + y2 + y3
   }
+  
     
 	prob.y <- c()
 	pdf.y <- y/sum(y)
@@ -115,7 +126,7 @@ for (k in 1:length(files))
 
 	for (m in length(den):16)
 	{
-		den[m] <- filler
+		den[m] <- params$filler
 	}
 	dt.temp <- as.data.frame(den)
 	colnames(dt.temp) <- cleanedSample$sample
@@ -130,14 +141,16 @@ oscc.out <- cbind(t(oscc.temp), as.data.frame(label))
 dim(oscc.out)
 
 
-setwd(paste (root, "/myGit/mixturemodel/reconData/", sep=""))
+#setwd(paste (root, "/myGit/mixturemodel/reconData/", sep=""))
+#getwd()
+#write.table (oscc.out, "recon_oscc_para1.txt", sep="\t", col.names = NA)
+
+
+setwd(paste (root, "/myGit/mixturemodel/reconData/para2/", sep=""))
 getwd()
-write.table (oscc.out, "recon_oscc_para1.txt", sep="\t", col.names = NA)
-
-
 combined.recon <- rbind (oscc.out, olk.out, normal.out)
 str(combined.recon)
 rownames(combined.recon)
 colnames(combined.recon)
-write.table (combined.recon, "recon_3classes_para1.txt", sep="\t", col.names = NA)
+write.table (combined.recon, "recon_3classes_para4.txt", sep="\t", col.names = NA)
 

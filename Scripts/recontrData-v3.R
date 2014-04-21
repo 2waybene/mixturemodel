@@ -24,11 +24,13 @@ root <- mac.os
 source (paste (root, "myGit/mixturemodel/Scripts/cleaningFuncs.R", sep = ""))
 source (paste (root, "myGit/mixturemodel/Scripts/simDt_functions.R", sep = ""))
 source (paste (root, "myGit/mixturemodel/Scripts/reconstrDtFunctions.R", sep = ""))
+para2() 
 
 dt.dir <- paste (root, "/myGit/mixturemodel/cleanedData/Normal/", sep="")
 lab <- "n"
 
 
+params <- para4()
 
 
 files <- list.files (path = dt.dir, pattern=".rda")
@@ -64,7 +66,7 @@ for (k in 1:length(files))
   {
 	  ratio <- cleanedSample$FP_count/cleanedSample$SP_count
   }else{
-    ratio <- 98/1.5
+    ratio <- params$oneSampleRatio[1]/params$oneSampleRatio[2]
   }
   
   
@@ -76,24 +78,25 @@ for (k in 1:length(files))
   if (popNum == 3)
   {
     y1 <- w.norm*P(x, cleanedSample$FP_mean, cleanedSample$FP_std)
-	  y2 <- w.mito*P(x, cleanedSample$SP_mean, cleanedSample$SP_std)
-	  y = y1 + y2
-  }else if (popNum <=2)
+    y2 <- w.mito*P(x, cleanedSample$SP_mean, cleanedSample$SP_std)
+    y = y1 + y2
+  }else if (popNum ==2)
   {
     if (is.na(cleanedSample$SP_mean))
     {
-      cleanedSample$SP_std = fakeSP_std 
-      cleanedSample$SP_mean = fakeSP_mean
+      cleanedSample$SP_std = params$fakeSP_std 
+      cleanedSample$SP_mean = params$fakeSP_mean
     }else if (is.na(cleanedSample$SP_std))
     {
-      cleanedSample$SP_std = fakeSP_std 
+      cleanedSample$SP_std = params$fakeSP_std 
     }
-      
-    y1 <- (w.norm*P(x, cleanedSample$FP_mean, cleanedSample$FP_std))*twoSampleRatio[1]
-    y2 <- (w.mito*P(x, cleanedSample$SP_mean, cleanedSample$SP_std))*twoSampleRatio[1]
-    y3 <- P(x, fake_aneu_mean, fake_aneu_std)*twoSampleRatio[2]
+    
+    y1 <- (w.norm*P(x, cleanedSample$FP_mean, cleanedSample$FP_std))*params$twoSampleRatio[1]
+    y2 <- (w.mito*P(x, cleanedSample$SP_mean, cleanedSample$SP_std))*params$twoSampleRatio[1]
+    y3 <- P(x, params$fake_aneu_mean, params$fake_aneu_std)*params$twoSampleRatio[2]
     y = y1 + y2 + y3
   }
+  
     
 	prob.y <- c()
 	pdf.y <- y/sum(y)
@@ -143,7 +146,7 @@ for (k in 1:length(files))
 
 	for (m in length(den):16)
 	{
-		den[m] <- filler
+		den[m] <- params$filler
 	}
 	dt.temp <- as.data.frame(den)
 	colnames(dt.temp) <- cleanedSample$sample
