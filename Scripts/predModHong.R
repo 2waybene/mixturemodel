@@ -67,15 +67,15 @@ multiClassSummary <- cmpfun(function (data, lev = NULL, model = NULL)
 
 ## set up working directory
 
-setwd(paste (root, "/myGit/mixturemodel/reconData/para1/", sep=""))
+#setwd(paste (root, "/myGit/mixturemodel/reconData/para1/", sep=""))
 ## read in data from txt file
-data <- read.table("recon_3classes_para1.txt", header=TRUE, sep = "\t")
+#data <- read.table("recon_3classes_para1.txt", header=TRUE, sep = "\t")
 
 setwd(paste (root, "/myGit/mixturemodel/reconData/para2/", sep=""))
 ## read in data from txt file
-data <- read.table("recon_3classes_para2.txt", header=TRUE, sep = "\t")
+#data <- read.table("recon_3classes_para2.txt", header=TRUE, sep = "\t")
 
-data <- read.table("recon_3classes_para3.txt", header=TRUE, sep = "\t")
+#data <- read.table("recon_3classes_para3.txt", header=TRUE, sep = "\t")
 data <- read.table("recon_3classes_para4.txt", header=TRUE, sep = "\t")
                    
 ##### BEGIN: data partition >>>>>
