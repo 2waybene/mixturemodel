@@ -182,3 +182,15 @@ rrfPred <- predict(rrfFit, labelTest)
 confusionMatrix(rrfPred, labelTest$label)
 ## Confusion Matrix and Statistics
 
+
+library(MASS)
+nnetFit <- train(label ~ .,
+                 method = "nnet",
+                 data = labelTrain
+)
+nnetPred <- predict(nnetFit, labelTest)
+confusionMatrix(nnetPred, labelTest$label)
+## Confusion Matrix and Statistics
+
+
+
