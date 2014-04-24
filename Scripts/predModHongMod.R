@@ -68,15 +68,21 @@ multiClassSummary <- cmpfun(function (data, lev = NULL, model = NULL)
 ## set up working directory
 
 #setwd(paste (root, "/myGit/mixturemodel/reconData/para1/", sep=""))
-## read in data from txt file
+
+##	param1
 #data <- read.table("recon_3classes_para1.txt", header=TRUE, sep = "\t")
 
 setwd(paste (root, "/myGit/mixturemodel/reconData/para2/", sep=""))
 ## read in data from txt file
-#data <- read.table("recon_3classes_para2.txt", header=TRUE, sep = "\t")
 
+##	param2
+data <- read.table("recon_3classes_para2.txt", header=TRUE, sep = "\t")
+
+##	param3
 #data <- read.table("recon_3classes_para3.txt", header=TRUE, sep = "\t")
-data <- read.table("recon_3classes_para4.txt", header=TRUE, sep = "\t")
+
+##	param4
+#data <- read.table("recon_3classes_para4.txt", header=TRUE, sep = "\t")
                    
 ##### BEGIN: data partition >>>>>
 ## set random seed
@@ -91,7 +97,9 @@ nrow(labelTrain)
 nrow(labelTest)
 
 
-##### END: data partition <<<<<
+setwd(paste (root, "/myGit/mixturemodel/modeling/", sep=""))
+sink ("log_param2.txt")
+
 ##### BEGIN: tune the parameters >>>>>
 ## control:
 # resampling technique: 5-repeat 10-fold cross-validation
@@ -105,6 +113,7 @@ ctrl <- trainControl(method = "repeatedcv",
 
 ##### END: tune the parameters <<<<<
 ##### BEGIN: train model - svm >>>>>
+
 set.seed(1024)
 svmFit <- train(label ~ ., data = labelTrain,
                 ## training model: svm >>>
@@ -122,63 +131,84 @@ str(svmProbs)
 confusionMatrix(svmPred, labelTest$label)
 
 
-## Confusion Matrix and Statistics
-##
-## Reference
-## Prediction c k n
-## c 8 2 0
-## k 0 2 0
-## n 2 2 30
-##
-## Overall Statistics
-##
-## Accuracy : 0.87
-## 95% CI : (0.737, 0.951)
-## No Information Rate : 0.652
-## P-Value [Acc > NIR] : 0.000839
-##
-## Kappa : 0.72
-## Mcnemar's Test P-Value : 0.111610
-##
-## Statistics by Class:
-##
-## Class: c Class: k Class: n
-## Sensitivity 0.800 0.3333 1.000
-## Specificity 0.944 1.0000 0.750
-## Pos Pred Value 0.800 1.0000 0.882
-## Neg Pred Value 0.944 0.9091 1.000
-## Prevalence 0.217 0.1304 0.652
-## Detection Rate 0.174 0.0435 0.652
-## Detection Prevalence 0.217 0.0435 0.739
-## Balanced Accuracy 0.872 0.6667 0.875
-## plot
-for(stat in c( 'Accuracy',
-                'Kappa',
-                'AccuracyLower',
-                'AccuracyUpper',
-  'AccuracyPValue',
-  'Sensitivity',
-  'Specificity',
-  'Pos_Pred_Value',
-  'Neg_Pred_Value',
-  'Detection_Rate',
-  'ROC',
-  'logLoss')) 
-{
-  print(plot(svmFit, metric=stat))
-}
-##### END: train model - svm <<<<<
-##### BEGIN: train model - rf >>>>>
+
+##### BEGIN: train model - random forest >>>>>
 rfFit <- train(label ~ ., method = "rf", data = labelTrain)
 rfPred <- predict(rfFit, labelTest)
 confusionMatrix(rfPred, labelTest$label)
 
 
 
-
-##### BEGIN: train model - rf >>>>>
+##### BEGIN: train model - regularized random forest >>>>>
 rrfFit <- train(label ~ ., method = "RRF", data = labelTrain)
 rrfPred <- predict(rrfFit, labelTest)
 confusionMatrix(rrfPred, labelTest$label)
-## Confusion Matrix and Statistics
+
+
+
+##### BEGIN: train model - knn >>>>>
+knnFit  <- train(
+  label ~ .,
+  data = labelTrain,
+  method='knn',
+  tuneGrid=expand.grid(.k=1:25),
+  metric='Accuracy',
+  trControl=trainControl(
+    method='repeatedcv', 
+    number=10, 
+    repeats=15))
+
+knnPred <- predict(knnFit , labelTest)
+confusionMatrix(knnPred, labelTest$label)
+
+
+
+##	Neural network
+
+nnetFit <- train(  
+	label ~ .,
+  	data = labelTrain,
+      method = "nnet",
+      trace = FALSE,
+      maxit = 100)
+
+nnetPred <- predict(nnetFit , labelTest)
+confusionMatrix(nnetPred, labelTest$label)
+
+
+
+##### BEGIN: train model - NaiveBayes >>>>>
+nbFit  <- train(
+  label ~ .,
+  data = labelTrain,
+  method='nb',
+  trControl=trainControl(method='cv',number=10)
+  )
+
+nbPred <- predict(nbFit , labelTest)
+confusionMatrix(nbPred, labelTest$label)
+
+
+sink()
+
+
+##### BEGIN: train model - knn3 >>>>>
+
+##	NOT working yet!
+knn3Fit  <- knn3(
+  label ~ .,
+  data = labelTrain,
+	k = 11,
+  trControl=trainControl(
+    method='repeatedcv', 
+    number=10, 
+    repeats=15))
+
+knn3Pred <- predict(knn3Fit , labelTest)
+confusionMatrix(knnPred, labelTest$label)
+
+
+
+
+
 
