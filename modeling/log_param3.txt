@@ -1,0 +1,180 @@
+Confusion Matrix and Statistics
+
+          Reference
+Prediction  c  k  n
+         c 24  1  1
+         k  1  7  6
+         n  2 16 23
+
+Overall Statistics
+                                          
+               Accuracy : 0.6667          
+                 95% CI : (0.5532, 0.7676)
+    No Information Rate : 0.3704          
+    P-Value [Acc > NIR] : 6.151e-08       
+                                          
+                  Kappa : 0.4906          
+ Mcnemar's Test P-Value : 0.1809          
+
+Statistics by Class:
+
+                     Class: c Class: k Class: n
+Sensitivity            0.8889  0.29167   0.7667
+Specificity            0.9630  0.87719   0.6471
+Pos Pred Value         0.9231  0.50000   0.5610
+Neg Pred Value         0.9455  0.74627   0.8250
+Prevalence             0.3333  0.29630   0.3704
+Detection Rate         0.2963  0.08642   0.2840
+Detection Prevalence   0.3210  0.17284   0.5062
+Balanced Accuracy      0.9259  0.58443   0.7069
+This is the prediction with SVM
+Confusion Matrix and Statistics
+
+          Reference
+Prediction  c  k  n
+         c 25  0  0
+         k  2 10 12
+         n  0 14 18
+
+Overall Statistics
+                                          
+               Accuracy : 0.6543          
+                 95% CI : (0.5404, 0.7566)
+    No Information Rate : 0.3704          
+    P-Value [Acc > NIR] : 2.061e-07       
+                                          
+                  Kappa : 0.4786          
+ Mcnemar's Test P-Value : NA              
+
+Statistics by Class:
+
+                     Class: c Class: k Class: n
+Sensitivity            0.9259   0.4167   0.6000
+Specificity            1.0000   0.7544   0.7255
+Pos Pred Value         1.0000   0.4167   0.5625
+Neg Pred Value         0.9643   0.7544   0.7551
+Prevalence             0.3333   0.2963   0.3704
+Detection Rate         0.3086   0.1235   0.2222
+Detection Prevalence   0.3086   0.2963   0.3951
+Balanced Accuracy      0.9630   0.5855   0.6627
+This is the prediction with random forest
+Confusion Matrix and Statistics
+
+          Reference
+Prediction  c  k  n
+         c 25  0  0
+         k  2 12 12
+         n  0 12 18
+
+Overall Statistics
+                                         
+               Accuracy : 0.679          
+                 95% CI : (0.566, 0.7785)
+    No Information Rate : 0.3704         
+    P-Value [Acc > NIR] : 1.74e-08       
+                                         
+                  Kappa : 0.5172         
+ Mcnemar's Test P-Value : NA             
+
+Statistics by Class:
+
+                     Class: c Class: k Class: n
+Sensitivity            0.9259   0.5000   0.6000
+Specificity            1.0000   0.7544   0.7647
+Pos Pred Value         1.0000   0.4615   0.6000
+Neg Pred Value         0.9643   0.7818   0.7647
+Prevalence             0.3333   0.2963   0.3704
+Detection Rate         0.3086   0.1481   0.2222
+Detection Prevalence   0.3086   0.3210   0.3704
+Balanced Accuracy      0.9630   0.6272   0.6824
+This is the prediction with regularized random forest
+Confusion Matrix and Statistics
+
+          Reference
+Prediction  c  k  n
+         c 25  1  3
+         k  2 11  9
+         n  0 12 18
+
+Overall Statistics
+                                          
+               Accuracy : 0.6667          
+                 95% CI : (0.5532, 0.7676)
+    No Information Rate : 0.3704          
+    P-Value [Acc > NIR] : 6.151e-08       
+                                          
+                  Kappa : 0.4972          
+ Mcnemar's Test P-Value : 0.2883          
+
+Statistics by Class:
+
+                     Class: c Class: k Class: n
+Sensitivity            0.9259   0.4583   0.6000
+Specificity            0.9259   0.8070   0.7647
+Pos Pred Value         0.8621   0.5000   0.6000
+Neg Pred Value         0.9615   0.7797   0.7647
+Prevalence             0.3333   0.2963   0.3704
+Detection Rate         0.3086   0.1358   0.2222
+Detection Prevalence   0.3580   0.2716   0.3704
+Balanced Accuracy      0.9259   0.6327   0.6824
+This is the prediction with k-nearest neighbor
+Confusion Matrix and Statistics
+
+          Reference
+Prediction  c  k  n
+         c 24  2  1
+         k  0  4  4
+         n  3 18 25
+
+Overall Statistics
+                                          
+               Accuracy : 0.6543          
+                 95% CI : (0.5404, 0.7566)
+    No Information Rate : 0.3704          
+    P-Value [Acc > NIR] : 2.061e-07       
+                                          
+                  Kappa : 0.4676          
+ Mcnemar's Test P-Value : 0.007701        
+
+Statistics by Class:
+
+                     Class: c Class: k Class: n
+Sensitivity            0.8889  0.16667   0.8333
+Specificity            0.9444  0.92982   0.5882
+Pos Pred Value         0.8889  0.50000   0.5435
+Neg Pred Value         0.9444  0.72603   0.8571
+Prevalence             0.3333  0.29630   0.3704
+Detection Rate         0.2963  0.04938   0.3086
+Detection Prevalence   0.3333  0.09877   0.5679
+Balanced Accuracy      0.9167  0.54825   0.7108
+This is the prediction with neural network
+Confusion Matrix and Statistics
+
+          Reference
+Prediction  c  k  n
+         c  0  0  0
+         k  0  0  0
+         n 27 24 30
+
+Overall Statistics
+                                          
+               Accuracy : 0.3704          
+                 95% CI : (0.2656, 0.4849)
+    No Information Rate : 0.3704          
+    P-Value [Acc > NIR] : 0.5418          
+                                          
+                  Kappa : 0               
+ Mcnemar's Test P-Value : NA              
+
+Statistics by Class:
+
+                     Class: c Class: k Class: n
+Sensitivity            0.0000   0.0000   1.0000
+Specificity            1.0000   1.0000   0.0000
+Pos Pred Value            NaN      NaN   0.3704
+Neg Pred Value         0.6667   0.7037      NaN
+Prevalence             0.3333   0.2963   0.3704
+Detection Rate         0.0000   0.0000   0.3704
+Detection Prevalence   0.0000   0.0000   1.0000
+Balanced Accuracy      0.5000   0.5000   0.5000
+This is the prediction with naive bayes
