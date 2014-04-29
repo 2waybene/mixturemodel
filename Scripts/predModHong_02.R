@@ -13,6 +13,15 @@ library(Metrics)
 require(compiler)
 ## Loading required package: compiler
 
+#====================
+mac.os  <- "/Users/li11/"
+linux   <- "~/"
+windows <- "X:/"
+
+#root <- windows
+root <- mac.os
+
+
 multiClassSummary <- cmpfun(function (data, lev = NULL, model = NULL)
 {
 
@@ -26,7 +35,7 @@ multiClassSummary <- cmpfun(function (data, lev = NULL, model = NULL)
 		stop("levels of observed and predicted data do not match")
 	
 	#Calculate custom one-vs-all stats for each class
-	prob_stats <- lapply(levels(data[, "pred"]), function(class)f
+	prob_stats <- lapply(levels(data[, "pred"]), function(class){
 
 
 		#Grab one-vs-all data for the class
@@ -79,7 +88,8 @@ multiClassSummary <- cmpfun(function (data, lev = NULL, model = NULL)
 	
 	# remove columns with zero variance
 	# http://stackoverflow.com/questions/8805298/quickly-remove-zero-variance-variables-from-a-data-frame
-	var0 <- unlist(lapply(data, function(x) 0 == var(if (is.factor(x)) as.integer(x) else x)))
+	#var0 <- unlist(lapply(data, function(x) 0 == var(if (is.factor(x)) as.integer(x) else x)))
+  var0 <- unlist(lapply(data, function(x) 0 == var(if (is.factor(x)) as.numeric(x) else x)))
 	dataN0 <- data[,-which(var0)]
 	# drop the first column of ID?
 	dataN0[,1] <- NULL
@@ -149,7 +159,7 @@ multiClassSummary <- cmpfun(function (data, lev = NULL, model = NULL)
 		'ROC', 
 		'logLoss'))
 	{
-		rint(plot(svmFit, metric=stat))
+		print(plot(svmFit, metric=stat))
 	}
 
 ##### END: train model - svm <<<<<
@@ -163,7 +173,7 @@ multiClassSummary <- cmpfun(function (data, lev = NULL, model = NULL)
 		# pre-process
 		# preProc = c("center", "scale", "YeoJohnson"),
 		rControl = trainControl(method = "repeatedcv", repeats = 5))
-	bPred <- predict(nbFit, labelTest)
+	nbPred <- predict(nbFit, labelTest)
 	confusionMatrix(nbPred, labelTest$label)
 
 
