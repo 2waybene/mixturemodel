@@ -1,13 +1,27 @@
 ##	File:   preModHong_02.R
 ##	Author: Hong Xu
 
+
+
 library(caret)
 library(pROC)
 library(Metrics)
+
+
 ##### REF: http://stats.stackexchange.com/questions/31579/what-is-the-optimal-k-for-the-k-nearest-neighbour-classifier-on-the-iris-dat
 # https://gist.github.com/zachmayer/3061272
 #Multi-Class Summary Function
 #Based on caret:::twoClassSummary
+
+#====================
+mac.os  <- "/Users/li11/"
+linux   <- "~/"
+windows <- "X:/"
+
+#root <- windows
+root <- mac.os
+
+
 
 
 require(compiler)
@@ -26,7 +40,7 @@ multiClassSummary <- cmpfun(function (data, lev = NULL, model = NULL)
 		stop("levels of observed and predicted data do not match")
 	
 	#Calculate custom one-vs-all stats for each class
-	prob_stats <- lapply(levels(data[, "pred"]), function(class)f
+	prob_stats <- lapply(levels(data[, "pred"]), function(class){
 
 
 		#Grab one-vs-all data for the class
@@ -149,7 +163,7 @@ multiClassSummary <- cmpfun(function (data, lev = NULL, model = NULL)
 		'ROC', 
 		'logLoss'))
 	{
-		rint(plot(svmFit, metric=stat))
+		print(plot(svmFit, metric=stat))
 	}
 
 ##### END: train model - svm <<<<<
@@ -163,7 +177,7 @@ multiClassSummary <- cmpfun(function (data, lev = NULL, model = NULL)
 		# pre-process
 		# preProc = c("center", "scale", "YeoJohnson"),
 		rControl = trainControl(method = "repeatedcv", repeats = 5))
-	bPred <- predict(nbFit, labelTest)
+	nbPred <- predict(nbFit, labelTest)
 	confusionMatrix(nbPred, labelTest$label)
 
 
