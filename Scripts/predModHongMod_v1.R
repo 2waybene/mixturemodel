@@ -1,23 +1,25 @@
-
-##  File: predModHongMod.R
+##============================================
+##  File: predModHongMod_v1.R
 ##  Author: Hong Xu
+##  Modified from preModHong_02.R by Hong Xu
+##  then modified to predModHongMod.R
+##  Now, it becomes predModHongMod_v1.R
+##============================================
 library(caret)
 library(pROC)
 library(Metrics)
 
-#====================
+
+#===========================
 mac.os  <- "/Users/li11/"
 linux   <- "~/"
 windows <- "X:/"
 
 #root <- windows
 root <- mac.os
+#==========================
 
 
-##### REF: http://stats.stackexchange.com/questions/31579/what-is-the-optimal-k-for-the-k-nearest-neighbour-classifier-on-the-iris-dat
-# https://gist.github.com/zachmayer/3061272
-#Multi-Class Summary Function
-#Based on caret:::twoClassSummary
 
 require(compiler)
 multiClassSummary <- cmpfun(function (data, lev = NULL, model = NULL)
@@ -68,38 +70,56 @@ multiClassSummary <- cmpfun(function (data, lev = NULL, model = NULL)
 
 ## set up working directory
 
-#setwd(paste (root, "/myGit/mixturemodel/reconData/para1/", sep=""))
 
-##	param1
-#data <- read.table("recon_3classes_para1.txt", header=TRUE, sep = "\t")
 
 setwd(paste (root, "/myGit/mixturemodel/reconData/para2/", sep=""))
-## read in data from txt file
+
+##	param1
+data <- read.table("recon_3classes_para1.txt", header=TRUE, sep = "\t")
+sink ("log_param1.txt")
 
 ##	param2
 #data <- read.table("recon_3classes_para2.txt", header=TRUE, sep = "\t")
+#sink ("log_param2.txt")
+
 
 ##	param3
 #data <- read.table("recon_3classes_para3.txt", header=TRUE, sep = "\t")
+#sink ("log_param3.txt")
+
 
 ##	param4
-data <- read.table("recon_3classes_para4.txt", header=TRUE, sep = "\t")
-                   
+#data <- read.table("recon_3classes_para4.txt", header=TRUE, sep = "\t")
+sink ("log_param4.txt")                   
+
+
+##	data cleaning
+
+var0 <- unlist(lapply(data, function(x) 0 == var(if (is.factor(x)) as.integer(x) else x)))
+dataN0 <- data[,-which(var0)]
+# drop the first column of ID?
+dataN0[,1] <- NULL
+
+
+
+
 ##### BEGIN: data partition >>>>>
 ## set random seed
 set.seed(12345)
-#set.seed(34546)
-## create data partition
 
+
+## create data partition
 inTrainingSet <- createDataPartition(data$label, p=.7, list=FALSE)
-labelTrain <- data[ inTrainingSet,]
-labelTest <- data[-inTrainingSet,]
-nrow(labelTrain)
-nrow(labelTest)
+labelTrain <- dataN0[ inTrainingSet,]
+labelTest <- dataN0[-inTrainingSet,]
+#nrow(labelTrain)
+#nrow(labelTest)
 
 
 setwd(paste (root, "/myGit/mixturemodel/modeling/", sep=""))
-sink ("log_param4.txt")
+#sink ("log_param4.txt")
+
+
 
 ##### BEGIN: tune the parameters >>>>>
 ## control:
@@ -201,17 +221,18 @@ sink()
 ##### BEGIN: train model - knn3 >>>>>
 
 ##	NOT working yet!
-knn3Fit  <- knn3(
-  label ~ .,
-  data = labelTrain,
-	k = 11,
-  trControl=trainControl(
-    method='repeatedcv', 
-    number=10, 
-    repeats=15))
+#knn3Fit  <- knn3(
+#  label ~ .,
+#  data = labelTrain,
+#	k = 11,
+#  trControl=trainControl(
+#    method='repeatedcv', 
+ 
+#   number=10, 
+#    repeats=15))
 
-knn3Pred <- predict(knn3Fit , labelTest)
-confusionMatrix(knnPred, labelTest$label)
+#knn3Pred <- predict(knn3Fit , labelTest)
+#confusionMatrix(knnPred, labelTest$label)
 
 
 
