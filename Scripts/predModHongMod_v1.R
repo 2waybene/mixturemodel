@@ -90,7 +90,7 @@ sink ("log_param1.txt")
 
 ##	param4
 #data <- read.table("recon_3classes_para4.txt", header=TRUE, sep = "\t")
-sink ("log_param4.txt")                   
+#sink ("log_param4.txt")                   
 
 
 ##	data cleaning
@@ -160,13 +160,6 @@ cat ("This is the prediction with random forest")
 cat("\n")
 confusionMatrix(rfPred, labelTest$label)
 
-
-##### BEGIN: train model - regularized random forest >>>>>
-rrfFit <- train(label ~ ., method = "RRF", data = labelTrain)
-rrfPred <- predict(rrfFit, labelTest)
-cat ("This is the prediction with regularized random forest")
-cat("\n")
-confusionMatrix(rrfPred, labelTest$label)
 
 
 ##### BEGIN: train model - knn >>>>>
