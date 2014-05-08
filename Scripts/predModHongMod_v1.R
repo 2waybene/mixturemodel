@@ -75,21 +75,25 @@ multiClassSummary <- cmpfun(function (data, lev = NULL, model = NULL)
 setwd(paste (root, "/myGit/mixturemodel/reconData/para2/", sep=""))
 
 ##	param1
-data <- read.table("recon_3classes_para1.txt", header=TRUE, sep = "\t")
-sink ("log_param1.txt")
+#data <- read.table("recon_3classes_para1.txt", header=TRUE, sep = "\t")
+#setwd(paste (root, "/myGit/mixturemodel/modeling/", sep=""))
+#sink ("log_param1.txt")
 
 ##	param2
 #data <- read.table("recon_3classes_para2.txt", header=TRUE, sep = "\t")
+#setwd(paste (root, "/myGit/mixturemodel/modeling/", sep=""))
 #sink ("log_param2.txt")
 
 
 ##	param3
-#data <- read.table("recon_3classes_para3.txt", header=TRUE, sep = "\t")
-#sink ("log_param3.txt")
+data <- read.table("recon_3classes_para3.txt", header=TRUE, sep = "\t")
+setwd(paste (root, "/myGit/mixturemodel/modeling/", sep=""))
+sink ("log_param3.txt")
 
 
 ##	param4
 #data <- read.table("recon_3classes_para4.txt", header=TRUE, sep = "\t")
+#setwd(paste (root, "/myGit/mixturemodel/modeling/", sep=""))
 #sink ("log_param4.txt")                   
 
 
@@ -114,10 +118,6 @@ labelTrain <- dataN0[ inTrainingSet,]
 labelTest <- dataN0[-inTrainingSet,]
 #nrow(labelTrain)
 #nrow(labelTest)
-
-
-setwd(paste (root, "/myGit/mixturemodel/modeling/", sep=""))
-#sink ("log_param4.txt")
 
 
 
@@ -151,14 +151,29 @@ svmProbs <- predict(svmFit, labelTest, type = "prob")
 #str(svmProbs)
 cat ("This is the prediction with SVM")
 cat("\n")
+cat("\n")
 confusionMatrix(svmPred, labelTest$label)
+
+
 
 ##### BEGIN: train model - random forest >>>>>
 rfFit <- train(label ~ ., method = "rf", data = labelTrain)
 rfPred <- predict(rfFit, labelTest)
+cat("\n")
 cat ("This is the prediction with random forest")
 cat("\n")
+cat("\n")
 confusionMatrix(rfPred, labelTest$label)
+
+
+##### BEGIN: train model - regularized random forest >>>>>
+rrfFit <- train(label ~ ., method = "RRF", data = labelTrain)
+rrfPred <- predict(rrfFit, labelTest)
+cat("\n")
+cat ("This is the prediction with regularized random forest")
+cat("\n")
+cat("\n")
+confusionMatrix(rrfPred, labelTest$label)
 
 
 
@@ -175,7 +190,9 @@ knnFit  <- train(
     repeats=15))
 
 knnPred <- predict(knnFit , labelTest)
+cat("\n")
 cat ("This is the prediction with k-nearest neighbor")
+cat("\n")
 cat("\n")
 confusionMatrix(knnPred, labelTest$label)
 
@@ -189,6 +206,7 @@ nnetFit <- train(
       maxit = 100)
 
 nnetPred <- predict(nnetFit , labelTest)
+cat("\n")
 cat ("This is the prediction with neural network")
 cat("\n")
 confusionMatrix(nnetPred, labelTest$label)
@@ -204,7 +222,9 @@ nbFit  <- train(
   )
 
 nbPred <- predict(nbFit , labelTest)
+cat("\n")
 cat ("This is the prediction with naive bayes")
+cat("\n")
 cat("\n")
 confusionMatrix(nbPred, labelTest$label)
 

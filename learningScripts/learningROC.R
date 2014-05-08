@@ -58,3 +58,29 @@ multiclass.roc(aSAH$gos6, aSAH$s100b, levels=c(3, 4, 5))
 multiclass.roc(aSAH$gos6, aSAH$s100b, percent=TRUE)
 
 aSAH$gos6
+
+
+
+
+# Basic example
+multiclass.roc(aSAH$gos6, aSAH$s100b)
+# Produces an innocuous warning because one level has no observation
+ 
+# Select only 3 of the aSAH$gos6 levels:
+multiclass.roc(aSAH$gos6, aSAH$s100b, levels=c(3, 4, 5))
+ 
+# Give the result in percent
+multiclass.roc(aSAH$gos6, aSAH$s100b, percent=TRUE)
+
+
+# randomForest & pROC packages should be installed:
+# install.packages(c('randomForest', 'pROC'))
+data(iris)
+library(randomForest)
+library(pROC)
+set.seed(1000)
+# 3-class in response variable
+rf = randomForest(Species~., data = iris, ntree = 100)
+
+predictions <- as.numeric(predict(rf, iris, type = 'response'))
+multiclass.roc(iris$Species, predictions)
