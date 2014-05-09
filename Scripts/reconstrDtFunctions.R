@@ -84,7 +84,7 @@ para4 <- function()
 {
   
   oneSampleRatio <- c(99.8, 0.1, 0.1)
-  twoSampleRatio <- c(99.8, 0.1)
+  twoSampleRatio <- c(99.8, 0.2)
   triSampleRatio <- c(90,10)
   
   fakeSP_mean <- 2.0

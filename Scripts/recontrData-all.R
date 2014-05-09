@@ -54,7 +54,8 @@ oscc.out <- cbind(t(oscc.temp), as.data.frame(label))
 dim(oscc.out)
 
 
-setwd(paste (root, "/myGit/mixturemodel/reconData/para2/", sep=""))
+#setwd(paste (root, "/myGit/mixturemodel/reconData/para2/", sep=""))
+setwd(paste (root, "/myGit/mixturemodel/reconData/para3/", sep="")) #Newly tested May 9th, 2014
 getwd()
 combined.recon <- rbind (oscc.out, olk.out, normal.out)
 str(combined.recon)
