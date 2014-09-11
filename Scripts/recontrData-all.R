@@ -65,6 +65,10 @@ write.table (combined.recon, "recon_3classes_para4.txt", sep="\t", col.names = N
 
 
 
+##================================
+##	reconstruction function
+##================================
+
 reconstruct <- function (files, params)
 {
 
