@@ -1,8 +1,8 @@
-##======================================================
+##=========================================================
 ##  File: predMod2classes.R
-##  Originally coded as "predModHong.R" by Hong Xu
+##  Author: Newly tested ONLY on normal and cancer sample
 ##  Author: Jianying
-##======================================================
+##=========================================================
 library(caret)
 library(pROC)
 library(ROCR)
@@ -15,9 +15,9 @@ mac.os  <- "/Users/li11/"
 linux   <- "~/"
 windows <- "X:/"
 
-#root <- windows
+root <- windows
 #root <- linux 
-root <- mac.os
+#root <- mac.os
 ##===============================================
 
 ##=========================================================
@@ -81,30 +81,26 @@ multiClassSummary <- cmpfun(function (data, lev = NULL, model = NULL)
 ##===================================================================
 ## set up working directory
 
-#setwd(paste (root, "/myGit/mixturemodel/reconData/para1/", sep=""))
-## read in data from txt file
-#data <- read.table("recon_3classes_para1.txt", header=TRUE, sep = "\t")
-
 setwd(paste (root, "/myGit/mixturemodel/reconData/para2/", sep=""))
-## read in data from txt file
-#data <- read.table("recon_3classes_para2.txt", header=TRUE, sep = "\t")
+data <- read.table("recon_3classes_para3.txt", header=TRUE, sep = "\t")
 
-#data <- read.table("recon_3classes_para3.txt", header=TRUE, sep = "\t")
-data <- read.table("recon_3classes_para4.txt", header=TRUE, sep = "\t")
-                   
-##### BEGIN: data partition >>>>>
-## set random seed
-set.seed(12345)
-#set.seed(34546)
+
+
+##	Retain data ONLY with two classes
+
+data.2.classes <- data[-which (data$label == "k"),]
+levels(data.2.classes$label) <- factor (data.2.classes$label)
+
+
+                    
+
 ## create data partition
 
-dat2classes <- data [-which(data$label == "k"),]
-dataK <- data [which(data$label == "k"),]
 
 
-inTrainingSet <- createDataPartition(dat2classes$label, p=.7, list=FALSE)
-labelTrain <- dat2classes[ inTrainingSet,]
-labelTest <- dat2classes[-inTrainingSet,]
+inTrainingSet <- createDataPartition(data.2.classes$label, p=.7, list=FALSE)
+labelTrain <- data.2.classes[ inTrainingSet,]
+labelTest <- data.2.classes[-inTrainingSet,]
 nrow(labelTrain)
 nrow(labelTest)
 
