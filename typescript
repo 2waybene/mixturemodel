@@ -1,0 +1,863 @@
+Script started on Tue 06 May 2014 02:34:44 PM EDT
+[li11@ehscmplp07/latimer mixturemodel]$ ll
+[00mtotal 672
+drwxr-xr-x 2 li11 grpdfargo 32768 May  6 14:28 [01;34mBeijingMeeting[00m
+drwxr-xr-x 5 li11 grpdfargo 32768 Apr 18 13:34 [01;34mcleanedData[00m
+drwx------ 4 li11 grpdfargo 32768 Apr 11 14:12 [01;34mdata[00m
+drwx------ 2 li11 grpdfargo 32768 Oct 30  2013 [01;34mdoc[00m
+drwxrwxr-x 2 li11 grpdfargo 32768 Apr 22 14:06 [01;34mfirstDraft[00m
+drwxrwxr-x 2 li11 grpdfargo 32768 May  6 14:08 [01;34mGUI[00m
+drwxr-xr-x 2 li11 grpdfargo 32768 Apr 24 19:55 [01;34mlearningScripts[00m
+drwxrwxr-x 4 li11 grpdfargo 32768 Jan 16 08:25 [01;34mMainStudy[00m
+drwxrwxr-x 2 li11 grpdfargo 32768 May  6 14:28 [01;34mmanuscript[00m
+drwxr-xr-x 2 li11 grpdfargo 32768 Apr 25 09:23 [01;34mmodeling[00m
+drwxrwxr-x 2 li11 grpdfargo 32768 Mar 26 09:56 [01;34moldScripts[00m
+drwxr-xr-x 2 li11 grpdfargo 32768 Sep 18  2013 [01;34moutput[00m
+-rw-r--r-- 1 li11 grpdfargo    74 Sep 18  2013 [00mREADME.md[00m
+drwxr-xr-x 4 li11 grpdfargo 32768 Apr 21 18:39 [01;34mreconData[00m
+drwx------ 6 li11 grpdfargo 32768 Apr 14 11:20 [01;34mreference[00m
+drwxr-xr-x 2 li11 grpdfargo 32768 May  6 14:33 [01;34mScripts[00m
+drwxr-xr-x 2 li11 grpdfargo 32768 Apr 18 08:19 [01;34mScriptsDraft[00m
+drwxrwxr-x 2 li11 grpdfargo 32768 Mar 25 15:28 [01;34msecondDraft[00m
+drwxrwxr-x 2 li11 grpdfargo 32768 Apr 22 14:34 [01;34mthirdDraft[00m
+-rw-r--r-- 1 li11 grpdfargo     0 May  6 14:34 [00mtypescript[00m
+drwxr-xr-x 2 li11 grpdfargo 32768 Apr 11 14:12 [01;34mworkingDir[00m
+drwxr-xr-x 2 li11 grpdfargo 32768 Mar  4 11:33 [01;34mworkingScripts[00m
+[m[li11@ehscmplp07/latimer mixturemodel]$ pwd
+/ddn/gs1/home/li11/myGit/mixturemodel
+[li11@ehscmplp07/latimer mixturemodel]$ cd scr[K[K[KScripts
+[li11@ehscmplp07/latimer Scripts]$ ls -tral [K[K[K[K[K[K[K[K[Kls -tral 
+[00mtotal 608
+-rw-r--r--  1 li11 grpdfargo  2058 Apr 15 08:31 [00msimDt_functions.R[00m
+-rw-rw-r--  1 li11 grpdfargo  5977 Apr 17 13:54 [00mcleaningFuncs.R[00m
+-rw-rw-r--  1 li11 grpdfargo  9907 Apr 17 15:32 [00mDI2rda_v1.R[00m
+-rw-rw-r--  1 li11 grpdfargo  6780 Apr 17 16:41 [00mDI2rda_v2.R[00m
+-rw-rw-r--  1 li11 grpdfargo  6875 Apr 17 16:45 [00mDI2rda_v3.R[00m
+-rw-r--r--  1 li11 grpdfargo   768 Apr 18 08:08 [00mparseRda.R[00m
+-rw-r--r--  1 li11 grpdfargo  3179 Apr 21 18:39 [00mreconstrDtFunctions.R[00m
+-rw-r--r--  1 li11 grpdfargo  3900 Apr 21 18:39 [00mrecontrData-v1.R[00m
+-rw-r--r--  1 li11 grpdfargo  3729 Apr 21 18:39 [00mrecontrData-v2.R[00m
+-rw-r--r--  1 li11 grpdfargo  3857 Apr 21 18:39 [00mrecontrData-v3.R[00m
+-rw-r--r--  1 li11 grpdfargo  4650 Apr 22 08:42 [00mrecontrData-all.R[00m
+-rw-rw-r--  1 li11 grpdfargo  6658 Apr 22 14:51 [00mpredModHong.R[00m
+-rw-r--r--  1 li11 grpdfargo  3391 Apr 23 09:08 [00mknn-model.R[00m
+-rw-r--r--  1 li11 grpdfargo 11502 May  2 20:41 [00mpredModHong_02.R[00m
+-rw-rw-r--  1 li11 grpdfargo  2572 May  5 16:13 [00msimulate_figures.R[00m
+-rw-rw-r--  1 li11 grpdfargo  6243 May  6 14:33 [00mpredModHongMod.R[00m
+drwxr-xr-x  2 li11 grpdfargo 32768 May  6 14:33 [01;34m.[00m
+-rw-rw-r--  1 li11 grpdfargo  6246 May  6 14:33 [00mpredModHongMod_v1.R[00m
+drwxr-xr-x 23 li11 grpdfargo 32768 May  6 14:34 [01;34m..[00m
+[m[li11@ehscmplp07/latimer Scripts]$ diff predModHongMod.R predModHongMod_v1.R [K[K[K[K[K[K[K[K[K[K[K[Kong_02.R 
+0a1,5
+> <<<<<<< HEAD
+> ##	File:   preModHong_02.R
+> ##	Author: Hong Xu
+> 
+> 
+2,3d6
+< ##  File: predModHongMod.R
+< ##  Author: Hong Xu
+7a11,16
+> 
+> ##### REF: http://stats.stackexchange.com/questions/31579/what-is-the-optimal-k-for-the-k-nearest-neighbour-classifier-on-the-iris-dat
+> # https://gist.github.com/zachmayer/3061272
+> #Multi-Class Summary Function
+> #Based on caret:::twoClassSummary
+> 
+17,20c26
+< ##### REF: http://stats.stackexchange.com/questions/31579/what-is-the-optimal-k-for-the-k-nearest-neighbour-classifier-on-the-iris-dat
+< # https://gist.github.com/zachmayer/3061272
+< #Multi-Class Summary Function
+< #Based on caret:::twoClassSummary
+---
+> 
+22a29,30
+> ## Loading required package: compiler
+> 
+25,64d32
+<                             #Load Libraries
+<     require(Metrics)
+<     require(caret)
+<     #Check data
+<     if (!all(levels(data[, "pred"]) == levels(data[, "obs"])))
+<       stop("levels of observed and predicted data do not match")
+<       #Calculate custom one-vs-all stats for each class
+<      prob_stats <- lapply(levels(data[, "pred"]), function(class)
+<        {
+<           #Grab one-vs-all data for the class
+<            pred <- ifelse(data[, "pred"] == class, 1, 0)
+<            obs <- ifelse(data[, "obs"] == class, 1, 0)
+<            prob <- data[,class]
+<          #Calculate one-vs-all AUC and logLoss and return
+<            cap_prob <- pmin(pmax(prob, .000001), .999999)
+<            prob_stats <- c(auc(obs, prob), logLoss(obs, cap_prob))
+<            names(prob_stats) <- c("ROC", "logLoss")
+<            return(prob_stats)
+<       })
+<       prob_stats <- do.call(rbind, prob_stats)
+<       rownames(prob_stats) <- paste( "Class:" , levels(data[, "pred"]))
+<     
+<       #Calculate confusion matrix-based statistics
+<       CM <- confusionMatrix(data[, "pred"], data[, "obs"])
+<                             #Aggregate and average class-wise stats
+<                             #Todo: add weights
+<       class_stats <- cbind(CM$byClass, prob_stats)
+<       class_stats <- colMeans(class_stats)
+<                             #Aggregate overall stats
+<       overall_stats <- c(CM$overall)
+<     
+<       #Combine overall with class-wise stats and remove some stats we don't want
+<       stats <- c(overall_stats, class_stats)
+<       stats <- stats[! names(stats) %in% c("AccuracyNull","Prevalence", "Detection Prevalence")]
+<                             
+<     #Clean names and return
+<                   
+<     names(stats) <- gsub('[[:blank:]] +', '_' , names(stats))
+<     return(stats)
+< })
+66,67c34,45
+< ## Note: no visible binding for global variable 'Metrics'
+< ## Note: no visible binding for global variable 'caret' 
+---
+> #Load Libraries
+> 
+> 	require(Metrics)
+> 	require(caret)
+> 
+> 	#Check data
+> 	if (!all(levels(data[, "pred"]) == levels(data[, "obs"])))
+> 		stop("levels of observed and predicted data do not match")
+> 	
+> 	#Calculate custom one-vs-all stats for each class
+> 	prob_stats <- lapply(levels(data[, "pred"]), function(class){
+> 
+69c47,50
+< ## set up working directory
+---
+> 		#Grab one-vs-all data for the class
+> 		pred <- ifelse(data[, "pred"] == class, 1, 0)
+> 		obs <- ifelse(data[, "obs"] == class, 1, 0)
+> 		prob <- data[,class]
+71c52,57
+< #setwd(paste (root, "/myGit/mixturemodel/reconData/para1/", sep=""))
+---
+> 		#Calculate one-vs-all AUC and logLoss and return
+> 		cap_prob <- pmin(pmax(prob, .000001), .999999)
+> 		prob_stats <- c(auc(obs, prob), logLoss(obs, cap_prob))
+> 		names(prob_stats) <- c('ROC', 'logLoss')
+> 		return(prob_stats)
+> 	})
+73,211d58
+< ##	param1
+< #data <- read.table("recon_3classes_para1.txt", header=TRUE, sep = "\t")
+< 
+< setwd(paste (root, "/myGit/mixturemodel/reconData/para2/", sep=""))
+< ## read in data from txt file
+< 
+< ##	param2
+< #data <- read.table("recon_3classes_para2.txt", header=TRUE, sep = "\t")
+< 
+< ##	param3
+< #data <- read.table("recon_3classes_para3.txt", header=TRUE, sep = "\t")
+< 
+< ##	param4
+< data <- read.table("recon_3classes_para4.txt", header=TRUE, sep = "\t")
+<                    
+< ##### BEGIN: data partition >>>>>
+< ## set random seed
+< set.seed(12345)
+< #set.seed(34546)
+< ## create data partition
+< 
+< inTrainingSet <- createDataPartition(data$label, p=.7, list=FALSE)
+< labelTrain <- data[ inTrainingSet,]
+< labelTest <- data[-inTrainingSet,]
+< nrow(labelTrain)
+< nrow(labelTest)
+< 
+< 
+< setwd(paste (root, "/myGit/mixturemodel/modeling/", sep=""))
+< sink ("log_param4.txt")
+< 
+< ##### BEGIN: tune the parameters >>>>>
+< ## control:
+< # resampling technique: 5-repeat 10-fold cross-validation
+< # performance metrics: ROC AUC curve
+< 
+< ctrl <- trainControl(method = "repeatedcv",
+<                      repeats = 5,
+<                      summaryFunction = multiClassSummary,
+<                      classProbs = TRUE)
+< 
+< 
+< ##### END: tune the parameters <<<<<
+< ##### BEGIN: train model - svm >>>>>
+< 
+< set.seed(1024)
+< svmFit <- train(label ~ ., data = labelTrain,
+<                 ## training model: svm >>>
+<                 method = "svmRadial",
+<                 metric = "ROC",
+<                 tuneLength = 10,
+<                 trControl = ctrl)
+< ## prediction
+< svmPred <- predict(svmFit, labelTest)
+< #str(svmPred)
+< 
+< ## predicted probabilities
+< svmProbs <- predict(svmFit, labelTest, type = "prob")
+< #str(svmProbs)
+< cat ("This is the prediction with SVM")
+< cat("\n")
+< confusionMatrix(svmPred, labelTest$label)
+< 
+< ##### BEGIN: train model - random forest >>>>>
+< rfFit <- train(label ~ ., method = "rf", data = labelTrain)
+< rfPred <- predict(rfFit, labelTest)
+< cat ("This is the prediction with random forest")
+< cat("\n")
+< confusionMatrix(rfPred, labelTest$label)
+< 
+< 
+< ##### BEGIN: train model - regularized random forest >>>>>
+< rrfFit <- train(label ~ ., method = "RRF", data = labelTrain)
+< rrfPred <- predict(rrfFit, labelTest)
+< cat ("This is the prediction with regularized random forest")
+< cat("\n")
+< confusionMatrix(rrfPred, labelTest$label)
+< 
+< 
+< ##### BEGIN: train model - knn >>>>>
+< knnFit  <- train(
+<   label ~ .,
+<   data = labelTrain,
+<   method='knn',
+<   tuneGrid=expand.grid(.k=1:25),
+<   metric='Accuracy',
+<   trControl=trainControl(
+<     method='repeatedcv', 
+<     number=10, 
+<     repeats=15))
+< 
+< knnPred <- predict(knnFit , labelTest)
+< cat ("This is the prediction with k-nearest neighbor")
+< cat("\n")
+< confusionMatrix(knnPred, labelTest$label)
+< 
+< ##	Neural network
+< 
+< nnetFit <- train(  
+< 	label ~ .,
+<   	data = labelTrain,
+<       method = "nnet",
+<       trace = FALSE,
+<       maxit = 100)
+< 
+< nnetPred <- predict(nnetFit , labelTest)
+< cat ("This is the prediction with neural network")
+< cat("\n")
+< confusionMatrix(nnetPred, labelTest$label)
+< 
+< 
+< 
+< ##### BEGIN: train model - NaiveBayes >>>>>
+< nbFit  <- train(
+<   label ~ .,
+<   data = labelTrain,
+<   method='nb',
+<   trControl=trainControl(method='cv',number=10)
+<   )
+< 
+< nbPred <- predict(nbFit , labelTest)
+< cat ("This is the prediction with naive bayes")
+< cat("\n")
+< confusionMatrix(nbPred, labelTest$label)
+< 
+< sink()
+< 
+< 
+< ##### BEGIN: train model - knn3 >>>>>
+< 
+< ##	NOT working yet!
+< knn3Fit  <- knn3(
+<   label ~ .,
+<   data = labelTrain,
+< 	k = 11,
+<   trControl=trainControl(
+<     method='repeatedcv', 
+<     number=10, 
+<     repeats=15))
+213,214d59
+< knn3Pred <- predict(knn3Fit , labelTest)
+< confusionMatrix(knnPred, labelTest$label)
+215a61,62
+> 	prob_stats <- do.call(rbind, prob_stats)
+> 	rownames(prob_stats) <- paste('Class:', levels(data[, "pred"]))
+216a64,83
+> 	#Calculate confusion matrix-based statistics
+> 	CM <- confusionMatrix(data[, "pred"], data[, "obs"])
+> 	#Aggregate and average class-wise stats
+> 	#Todo: add weights
+> 	class_stats <- cbind(CM$byClass, prob_stats)
+> 	class_stats <- colMeans(class_stats)
+> 	
+> 	#Aggregate overall stats
+> 	overall_stats <- c(CM$overall)
+> 	#Combine overall with class-wise stats and remove some stats we don't want
+> 
+> 
+> 
+> 	stats <- c(overall_stats, class_stats)
+> 	stats <- stats[! names(stats) %in% c('AccuracyNull', 'Prevalence', 'Detection Prevalence')]
+> 
+> 	#Clean names and return
+> 	names(stats) <- gsub('[[:blank:]]+', '_', names(stats))
+> 	return(stats)
+> })
+218a86,445
+> 	## Note: no visible binding for global variable Metrics 
+> 	## Note: no visible binding for global variable caret 
+> 	## set up working directory
+> 
+> 	setwd(paste (root, "/myGit/mixturemodel/reconData/para1/", sep=""))
+> 
+> 	##	param1
+> 	data <- read.table("recon_3classes_para1.txt", header=TRUE, sep = "\t")
+> 	
+> 	# remove columns with zero variance
+> 	# http://stackoverflow.com/questions/8805298/quickly-remove-zero-variance-variables-from-a-data-frame
+> 	var0 <- unlist(lapply(data, function(x) 0 == var(if (is.factor(x)) as.integer(x) else x)))
+> 	dataN0 <- data[,-which(var0)]
+> 	# drop the first column of ID?
+> 	dataN0[,1] <- NULL
+> 
+> 	##### BEGIN: data partition >>>>>
+> 	## set random seed
+> 	set.seed(12345)
+> 	## create data partition
+> 	inTrainingSet <- createDataPartition(dataN0$label, p=.7, list=FALSE)
+> 	labelTrain <- dataN0[ inTrainingSet,]
+> 	labelTest <- dataN0[-inTrainingSet,]
+> 	nrow(labelTrain)
+> 
+> 	nrow(labelTest)
+> 
+> 	##### END: data partition <<<<<
+> 	##### BEGIN: tune the parameters >>>>>
+> 	## control:
+> 	# resampling technique: 5-repeat 10-fold cross-validation
+> 	# performance metrics: ROC AUC curve
+> 	ctrl <- trainControl(method = "repeatedcv",
+> 				repeats = 5,
+> 				summaryFunction = multiClassSummary,
+> 				classProbs = TRUE)
+> 	
+> 	##### END: tune the parameters <<<<<
+> 	##### BEGIN: train model - svm >>>>>
+> 	set.seed(1024)
+> 	svmFit <- train(label ~ ., data = labelTrain,
+> 		## training model: svm >>>
+> 
+> 		method = "svmRadial",
+> 		metric = "ROC",
+> 		# pre-process
+> 		# preProc = c("center", "scale", "YeoJohnson"),
+> 		tuneLength = 10,
+> 		trControl = ctrl)
+> 
+> 	## prediction
+> 	svmPred <- predict(svmFit, labelTest)
+> 	str(svmPred)
+> 	## Factor w/ 3 levels "c","k","n": 1 1 1 1 1 1 1 1 1 1 ...
+> 	## predicted probabilities
+> 	svmProbs <- predict(svmFit, labelTest, type = "prob")
+> 	str(svmProbs)
+> 	## 
+> 	## 
+> 	##data.frame: 81 obs. of 3 variables:
+> 	## $ c: num 0.909 0.9 0.94 0.907 0.918 ...
+> 	## $ k: num 0.058 0.0644 0.0371 0.0599 0.0519 ...
+> 	## $ n: num 0.0326 0.0355 0.0227 0.0334 0.0297 ...
+> 	## evaluation
+> 	confusionMatrix(svmPred, labelTest$label)
+> 
+> 	## plot
+> 	for(stat in c(
+> 		'Accuracy',
+> 		'Kappa', 
+> 		'AccuracyLower', 
+> 		'AccuracyUpper', 
+> 		'AccuracyPValue',
+> 		'Sensitivity', 
+> 		'Specificity', 
+> 		'Pos_Pred_Value',
+> 		'Neg_Pred_Value', 
+> 		'Detection_Rate', 
+> 		'ROC', 
+> 		'logLoss'))
+> 	{
+> 		print(plot(svmFit, metric=stat))
+> 	}
+> 
+> ##### END: train model - svm <<<<<
+> 	
+> 	##### BEGIN: train model - nb >>>>>
+> 	#	https://stat.ethz.ch/pipermail/r-help/2007-October/144592.html
+> 	library(klaR)
+> 	nbFit <- train(label ~ .,
+> 		method = "nb",
+> 		data = labelTrain,
+> 		# pre-process
+> 		# preProc = c("center", "scale", "YeoJohnson"),
+> 		rControl = trainControl(method = "repeatedcv", repeats = 5))
+> 	nbPred <- predict(nbFit, labelTest)
+> 	confusionMatrix(nbPred, labelTest$label)
+> 
+> 
+> 	pcannFit <- train(label ~ .,
+> 		method = "pcaNNet",
+> 		data = labelTrain,
+> 		# pre-process
+> 		# preProc = c("center", "scale", "YeoJohnson"),
+> 		trace = FALSE)
+> 	
+> 	pcannPred <- predict(pcannFit, labelTest)
+> 	confusionMatrix(pcannPred, labelTest$label)
+> 
+> 
+> 	##### END: train model - pcaNNet <<<<<
+> 	##### BEGIN: train model - rf >>>>>
+> 	rfFit <- train(label ~ .,
+> 			method = "rf",
+> 			# pre-process
+> 			# preProc = c("center", "scale", "YeoJohnson"),
+> 			data = labelTrain)
+> 	rfPred <- predict(rfFit, labelTest)
+> 	confusionMatrix(rfPred, labelTest$label)
+> 
+> 
+> 
+> 	##### END: train model - rf <<<<<
+> 	##### BEGIN: train model - RRF >>>>>
+> 	rrfFit <- train(label ~ .,
+> 			method = "RRF",
+> 			# pre-process
+> 			# preProc = c("center", "scale", "YeoJohnson"),
+> 			data = labelTrain)
+> 	rrfPred <- predict(rrfFit, labelTest)
+> 	confusionMatrix(rrfPred, labelTest$label)
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> =======
+> ##	File:   preModHong_02.R
+> ##	Author: Hong Xu
+> 
+> library(caret)
+> library(pROC)
+> library(Metrics)
+> ##### REF: http://stats.stackexchange.com/questions/31579/what-is-the-optimal-k-for-the-k-nearest-neighbour-classifier-on-the-iris-dat
+> # https://gist.github.com/zachmayer/3061272
+> #Multi-Class Summary Function
+> #Based on caret:::twoClassSummary
+> 
+> 
+> require(compiler)
+> ## Loading required package: compiler
+> 
+> #====================
+> mac.os  <- "/Users/li11/"
+> linux   <- "~/"
+> windows <- "X:/"
+> 
+> #root <- windows
+> root <- mac.os
+> 
+> 
+> multiClassSummary <- cmpfun(function (data, lev = NULL, model = NULL)
+> {
+> 
+> #Load Libraries
+> 
+> 	require(Metrics)
+> 	require(caret)
+> 
+> 	#Check data
+> 	if (!all(levels(data[, "pred"]) == levels(data[, "obs"])))
+> 		stop("levels of observed and predicted data do not match")
+> 	
+> 	#Calculate custom one-vs-all stats for each class
+> 	prob_stats <- lapply(levels(data[, "pred"]), function(class){
+> 
+> 
+> 		#Grab one-vs-all data for the class
+> 		pred <- ifelse(data[, "pred"] == class, 1, 0)
+> 		obs <- ifelse(data[, "obs"] == class, 1, 0)
+> 		prob <- data[,class]
+> 
+> 		#Calculate one-vs-all AUC and logLoss and return
+> 		cap_prob <- pmin(pmax(prob, .000001), .999999)
+> 		prob_stats <- c(auc(obs, prob), logLoss(obs, cap_prob))
+> 		names(prob_stats) <- c('ROC', 'logLoss')
+> 		return(prob_stats)
+> 	})
+> 
+> 
+> 
+> 	prob_stats <- do.call(rbind, prob_stats)
+> 	rownames(prob_stats) <- paste('Class:', levels(data[, "pred"]))
+> 
+> 	#Calculate confusion matrix-based statistics
+> 	CM <- confusionMatrix(data[, "pred"], data[, "obs"])
+> 	#Aggregate and average class-wise stats
+> 	#Todo: add weights
+> 	class_stats <- cbind(CM$byClass, prob_stats)
+> 	class_stats <- colMeans(class_stats)
+> 	
+> 	#Aggregate overall stats
+> 	overall_stats <- c(CM$overall)
+> 	#Combine overall with class-wise stats and remove some stats we don't want
+> 
+> 
+> 
+> 	stats <- c(overall_stats, class_stats)
+> 	stats <- stats[! names(stats) %in% c('AccuracyNull', 'Prevalence', 'Detection Prevalence')]
+> 
+> 	#Clean names and return
+> 	names(stats) <- gsub('[[:blank:]]+', '_', names(stats))
+> 	return(stats)
+> })
+> 
+> 
+> 	## Note: no visible binding for global variable Metrics 
+> 	## Note: no visible binding for global variable caret 
+> 	## set up working directory
+> 
+> 	setwd(paste (root, "/myGit/mixturemodel/reconData/para1/", sep=""))
+> 
+> 	##	param1
+> 	data <- read.table("recon_3classes_para1.txt", header=TRUE, sep = "\t")
+> 	
+> 	# remove columns with zero variance
+> 	# http://stackoverflow.com/questions/8805298/quickly-remove-zero-variance-variables-from-a-data-frame
+> 	#var0 <- unlist(lapply(data, function(x) 0 == var(if (is.factor(x)) as.integer(x) else x)))
+>   var0 <- unlist(lapply(data, function(x) 0 == var(if (is.factor(x)) as.numeric(x) else x)))
+> 	dataN0 <- data[,-which(var0)]
+> 	# drop the first column of ID?
+> 	dataN0[,1] <- NULL
+> 
+> 	##### BEGIN: data partition >>>>>
+> 	## set random seed
+> 	set.seed(12345)
+> 	## create data partition
+> 	inTrainingSet <- createDataPartition(dataN0$label, p=.7, list=FALSE)
+> 	labelTrain <- dataN0[ inTrainingSet,]
+> 	labelTest <- dataN0[-inTrainingSet,]
+> 	nrow(labelTrain)
+> 
+> 	nrow(labelTest)
+> 
+> 	##### END: data partition <<<<<
+> 	##### BEGIN: tune the parameters >>>>>
+> 	## control:
+> 	# resampling technique: 5-repeat 10-fold cross-validation
+> 	# performance metrics: ROC AUC curve
+> 	ctrl <- trainControl(method = "repeatedcv",
+> 				repeats = 5,
+> 				summaryFunction = multiClassSummary,
+> 				classProbs = TRUE)
+> 	
+> 	##### END: tune the parameters <<<<<
+> 	##### BEGIN: train model - svm >>>>>
+> 	set.seed(1024)
+> 	svmFit <- train(label ~ ., data = labelTrain,
+> 		## training model: svm >>>
+> 
+> 		method = "svmRadial",
+> 		metric = "ROC",
+> 		# pre-process
+> 		# preProc = c("center", "scale", "YeoJohnson"),
+> 		tuneLength = 10,
+> 		trControl = ctrl)
+> 
+> 	## prediction
+> 	svmPred <- predict(svmFit, labelTest)
+> 	str(svmPred)
+> 	## Factor w/ 3 levels "c","k","n": 1 1 1 1 1 1 1 1 1 1 ...
+> 	## predicted probabilities
+> 	svmProbs <- predict(svmFit, labelTest, type = "prob")
+> 	str(svmProbs)
+> 	## 
+> 	## 
+> 	##data.frame: 81 obs. of 3 variables:
+> 	## $ c: num 0.909 0.9 0.94 0.907 0.918 ...
+> 	## $ k: num 0.058 0.0644 0.0371 0.0599 0.0519 ...
+> 	## $ n: num 0.0326 0.0355 0.0227 0.0334 0.0297 ...
+> 	## evaluation
+> 	confusionMatrix(svmPred, labelTest$label)
+> 
+> 	## plot
+> 	for(stat in c(
+> 		'Accuracy',
+> 		'Kappa', 
+> 		'AccuracyLower', 
+> 		'AccuracyUpper', 
+> 		'AccuracyPValue',
+> 		'Sensitivity', 
+> 		'Specificity', 
+> 		'Pos_Pred_Value',
+> 		'Neg_Pred_Value', 
+> 		'Detection_Rate', 
+> 		'ROC', 
+> 		'logLoss'))
+> 	{
+> 		print(plot(svmFit, metric=stat))
+> 	}
+> 
+> ##### END: train model - svm <<<<<
+> 	
+> 	##### BEGIN: train model - nb >>>>>
+> 	#	https://stat.ethz.ch/pipermail/r-help/2007-October/144592.html
+> 	library(klaR)
+> 	nbFit <- train(label ~ .,
+> 		method = "nb",
+> 		data = labelTrain,
+> 		# pre-process
+> 		# preProc = c("center", "scale", "YeoJohnson"),
+> 		rControl = trainControl(method = "repeatedcv", repeats = 5))
+> 	nbPred <- predict(nbFit, labelTest)
+> 	confusionMatrix(nbPred, labelTest$label)
+> 
+> 
+> 	pcannFit <- train(label ~ .,
+> 		method = "pcaNNet",
+> 		data = labelTrain,
+> 		# pre-process
+> 		# preProc = c("center", "scale", "YeoJohnson"),
+> 		trace = FALSE)
+> 	
+> 	pcannPred <- predict(pcannFit, labelTest)
+> 	confusionMatrix(pcannPred, labelTest$label)
+> 
+> 
+> 	##### END: train model - pcaNNet <<<<<
+> 	##### BEGIN: train model - rf >>>>>
+> 	rfFit <- train(label ~ .,
+> 			method = "rf",
+> 			# pre-process
+> 			# preProc = c("center", "scale", "YeoJohnson"),
+> 			data = labelTrain)
+> 	rfPred <- predict(rfFit, labelTest)
+> 	confusionMatrix(rfPred, labelTest$label)
+> 
+> 
+> 
+> 	##### END: train model - rf <<<<<
+> 	##### BEGIN: train model - RRF >>>>>
+> 	rrfFit <- train(label ~ .,
+> 			method = "RRF",
+> 			# pre-process
+> 			# preProc = c("center", "scale", "YeoJohnson"),
+> 			data = labelTrain)
+> 	rrfPred <- predict(rrfFit, labelTest)
+> 	confusionMatrix(rrfPred, labelTest$label)
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> >>>>>>> 91a98f03dae9a38b1a7c69f2b14bd565a6f8a7ea
+[li11@ehscmplp07/latimer Scripts]$ ll[K[Kcd ..
+[li11@ehscmplp07/latimer mixturemodel]$ pwd
+/ddn/gs1/home/li11/myGit/mixturemodel
+[li11@ehscmplp07/latimer mixturemodel]$ cd er[K[KreconData/
+[li11@ehscmplp07/latimer reconData]$ ls -tral 
+[00mtotal 128
+drwxr-xr-x  2 li11 grpdfargo 32768 Apr 21 18:39 [01;34mpara1[00m
+drwxr-xr-x  4 li11 grpdfargo 32768 Apr 21 18:39 [01;34m.[00m
+drwxr-xr-x  2 li11 grpdfargo 32768 Apr 22 08:42 [01;34mpara2[00m
+drwxr-xr-x 23 li11 grpdfargo 32768 May  6 14:34 [01;34m..[00m
+[m[li11@ehscmplp07/latimer reconData]$ ls -l para1/
+[00mtotal 160
+-rw-r--r-- 1 li11 grpdfargo 37066 Apr 21 18:39 [00mrecon_3classes_para1.txt[00m
+-rw-r--r-- 1 li11 grpdfargo 11219 Apr 21 18:39 [00mrecon_normal_para1.txt[00m
+-rw-r--r-- 1 li11 grpdfargo  9020 Apr 21 18:39 [00mrecon_olk_para1.txt[00m
+-rw-r--r-- 1 li11 grpdfargo 16991 Apr 21 18:39 [00mrecon_oscc_para1.txt[00m
+[m[li11@ehscmplp07/latimer reconData]$ ls -l para1/[K[K2/
+[00mtotal 192
+-rw-r--r-- 1 li11 grpdfargo 37112 Apr 21 18:39 [00mrecon_3classes_para2.txt[00m
+-rw-r--r-- 1 li11 grpdfargo 36997 Apr 21 18:39 [00mrecon_3classes_para3.txt[00m
+-rw-r--r-- 1 li11 grpdfargo 37133 Apr 22 08:42 [00mrecon_3classes_para4.txt[00m
+[m[li11@ehscmplp07/latimer reconData]$ cp rec[K[K[K[K[K[Kpwd 
+/ddn/gs1/home/li11/myGit/mixturemodel/reconData
+[li11@ehscmplp07/latimer reconData]$ ll
+[00mtotal 64
+drwxr-xr-x 2 li11 grpdfargo 32768 Apr 21 18:39 [01;34mpara1[00m
+drwxr-xr-x 2 li11 grpdfargo 32768 Apr 22 08:42 [01;34mpara2[00m
+[m[li11@ehscmplp07/latimer reconData]$ cp r[Kap[K[Kpara1/recon_3classes_para1.txt para2/
+[li11@ehscmplp07/latimer reconData]$ ls -l para2/
+[00mtotal 192
+-rw-r--r-- 1 li11 grpdfargo 37066 May  6 14:43 [00mrecon_3classes_para1.txt[00m
+-rw-r--r-- 1 li11 grpdfargo 37112 Apr 21 18:39 [00mrecon_3classes_para2.txt[00m
+-rw-r--r-- 1 li11 grpdfargo 36997 Apr 21 18:39 [00mrecon_3classes_para3.txt[00m
+-rw-r--r-- 1 li11 grpdfargo 37133 Apr 22 08:42 [00mrecon_3classes_para4.txt[00m
+[m[li11@ehscmplp07/latimer reconData]$ cd pr[Kara2/
+[li11@ehscmplp07/latimer para2]$ ls -tral 
+[00mtotal 352
+drwxr-xr-x 4 li11 grpdfargo 32768 Apr 21 18:39 [01;34m..[00m
+-rw-r--r-- 1 li11 grpdfargo 15219 Apr 21 18:39 [00m.Rhistory[00m
+-rw-r--r-- 1 li11 grpdfargo 37112 Apr 21 18:39 [00mrecon_3classes_para2.txt[00m
+-rw-r--r-- 1 li11 grpdfargo 36997 Apr 21 18:39 [00mrecon_3classes_para3.txt[00m
+-rw-r--r-- 1 li11 grpdfargo 37133 Apr 22 08:42 [00mrecon_3classes_para4.txt[00m
+drwxr-xr-x 2 li11 grpdfargo 32768 May  6 14:43 [01;34m.[00m
+-rw-r--r-- 1 li11 grpdfargo 37066 May  6 14:43 [00mrecon_3classes_para1.txt[00m
+[m[li11@ehscmplp07/latimer para2]$ cd ..
+[li11@ehscmplp07/latimer reconData]$ c[Kcd ..
+[li11@ehscmplp07/latimer mixturemodel]$ ll
+[00mtotal 672
+drwxr-xr-x 2 li11 grpdfargo 32768 May  6 14:28 [01;34mBeijingMeeting[00m
+drwxr-xr-x 5 li11 grpdfargo 32768 Apr 18 13:34 [01;34mcleanedData[00m
+drwx------ 4 li11 grpdfargo 32768 Apr 11 14:12 [01;34mdata[00m
+drwx------ 2 li11 grpdfargo 32768 Oct 30  2013 [01;34mdoc[00m
+drwxrwxr-x 2 li11 grpdfargo 32768 Apr 22 14:06 [01;34mfirstDraft[00m
+drwxrwxr-x 2 li11 grpdfargo 32768 May  6 14:08 [01;34mGUI[00m
+drwxr-xr-x 2 li11 grpdfargo 32768 Apr 24 19:55 [01;34mlearningScripts[00m
+drwxrwxr-x 4 li11 grpdfargo 32768 Jan 16 08:25 [01;34mMainStudy[00m
+drwxrwxr-x 2 li11 grpdfargo 32768 May  6 14:28 [01;34mmanuscript[00m
+drwxr-xr-x 2 li11 grpdfargo 32768 Apr 25 09:23 [01;34mmodeling[00m
+drwxrwxr-x 2 li11 grpdfargo 32768 Mar 26 09:56 [01;34moldScripts[00m
+drwxr-xr-x 2 li11 grpdfargo 32768 Sep 18  2013 [01;34moutput[00m
+-rw-r--r-- 1 li11 grpdfargo    74 Sep 18  2013 [00mREADME.md[00m
+drwxr-xr-x 4 li11 grpdfargo 32768 Apr 21 18:39 [01;34mreconData[00m
+drwx------ 6 li11 grpdfargo 32768 Apr 14 11:20 [01;34mreference[00m
+drwxr-xr-x 2 li11 grpdfargo 32768 May  6 14:33 [01;34mScripts[00m
+drwxr-xr-x 2 li11 grpdfargo 32768 Apr 18 08:19 [01;34mScriptsDraft[00m
+drwxrwxr-x 2 li11 grpdfargo 32768 Mar 25 15:28 [01;34msecondDraft[00m
+drwxrwxr-x 2 li11 grpdfargo 32768 Apr 22 14:34 [01;34mthirdDraft[00m
+-rw-r--r-- 1 li11 grpdfargo     0 May  6 14:34 [00mtypescript[00m
+drwxr-xr-x 2 li11 grpdfargo 32768 Apr 11 14:12 [01;34mworkingDir[00m
+drwxr-xr-x 2 li11 grpdfargo 32768 Mar  4 11:33 [01;34mworkingScripts[00m
+[m[li11@ehscmplp07/latimer mixturemodel]$ cd modeling/
+[li11@ehscmplp07/latimer modeling]$ ll
+[00mtotal 128
+-rw-r--r-- 1 li11 grpdfargo 5970 Apr 25 09:23 [00mlog_param2.txt[00m
+-rw-r--r-- 1 li11 grpdfargo 5962 Apr 25 09:23 [00mlog_param3.txt[00m
+-rw-r--r-- 1 li11 grpdfargo 5970 Apr 25 09:23 [00mlog_param4.txt[00m
+-rw-r--r-- 1 li11 grpdfargo 4023 Apr 23 09:08 [00mmodel-log-04222014.rtf[00m
+[m[li11@ehscmplp07/latimer modeling]$ m[Kmkdir log_file_a[K04252014
+[li11@ehscmplp07/latimer modeling]$ mv *.txt log_
+mv: target `log_' is not a directory
+[li11@ehscmplp07/latimer modeling]$ mv *.txt log_file_04252014/
+[li11@ehscmplp07/latimer modeling]$ ll
+[00mtotal 64
+drwxr-xr-x 2 li11 grpdfargo 32768 May  6 14:57 [01;34mlog_file_04252014[00m
+-rw-r--r-- 1 li11 grpdfargo  4023 Apr 23 09:08 [00mmodel-log-04222014.rtf[00m
+[m[li11@ehscmplp07/latimer modeling]$ m [Kv model-log-04222014.rtf log_file_04252014/
+[li11@ehscmplp07/latimer modeling]$ ll
+[00mtotal 32
+drwxr-xr-x 2 li11 grpdfargo 32768 May  6 14:58 [01;34mlog_file_04252014[00m
+[m[li11@ehscmplp07/latimer modeling]$ cd ..
+[li11@ehscmplp07/latimer mixturemodel]$ git status 
+# On branch master
+# Changes not staged for commit:
+#   (use "git add/rm <file>..." to update what will be committed)
+#   (use "git checkout -- <file>..." to discard changes in working directory)
+#
+#	modified:   Scripts/predModHongMod.R
+#	modified:   Scripts/predModHong_02.R
+#	deleted:    modeling/log_param2.txt
+#	deleted:    modeling/log_param3.txt
+#	deleted:    modeling/log_param4.txt
+#	deleted:    modeling/model-log-04222014.rtf
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	Scripts/predModHongMod_v1.R
+#	modeling/log_file_04252014/
+#	reconData/para2/log_param1.txt
+#	reconData/para2/log_param4.txt
+#	reconData/para2/recon_3classes_para1.txt
+#	typescript
+no changes added to commit (use "git add" and/or "git commit -a")
+[li11@ehscmplp07/latimer mixturemodel]$ git add Scripts/predModHongMod.R
+[li11@ehscmplp07/latimer mixturemodel]$ git add  Scripts/predModHong_02.R
+[li11@ehscmplp07/latimer mixturemodel]$ git rm modeling/log_param2.txt
+rm 'modeling/log_param2.txt'
+[li11@ehscmplp07/latimer mixturemodel]$ git rm modeling/log_param3.txt
+rm 'modeling/log_param3.txt'
+[li11@ehscmplp07/latimer mixturemodel]$ gi [Kt rm  modeling/log_param4.txt
+rm 'modeling/log_param4.txt'
+[li11@ehscmplp07/latimer mixturemodel]$ git rm  modeling/model-log-04222014.rtf
+rm 'modeling/model-log-04222014.rtf'
+[li11@ehscmplp07/latimer mixturemodel]$ git add reconData/para2/log_param1.txt
+[li11@ehscmplp07/latimer mixturemodel]$ git add   reconData/para2/recon_3classes_para1.txt
+[li11@ehscmplp07/latimer mixturemodel]$ #       typescript
+[li11@ehscmplp07/latimer mixturemodel]$ gt[Kit add reconData/para2/log_param4.txt
+[li11@ehscmplp07/latimer mixturemodel]$ git add   reconData/para2/log_param1.txt
+[li11@ehscmplp07/latimer mixturemodel]$ git add  modeling/log_file_04252014/
+[li11@ehscmplp07/latimer mixturemodel]$ git add    Scripts/predModHongMod_v1.R
+[li11@ehscmplp07/latimer mixturemodel]$ git status 
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#	modified:   Scripts/predModHongMod.R
+#	new file:   Scripts/predModHongMod_v1.R
+#	modified:   Scripts/predModHong_02.R
+#	renamed:    modeling/log_param2.txt -> modeling/log_file_04252014/log_param2.txt
+#	renamed:    modeling/log_param3.txt -> modeling/log_file_04252014/log_param3.txt
+#	renamed:    modeling/log_param4.txt -> modeling/log_file_04252014/log_param4.txt
+#	renamed:    modeling/model-log-04222014.rtf -> modeling/log_file_04252014/model-log-04222014.rtf
+#	new file:   reconData/para2/log_param1.txt
+#	new file:   reconData/para2/log_param4.txt
+#	new file:   reconData/para2/recon_3classes_para1.txt
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#	typescript
+[li11@ehscmplp07/latimer mixturemodel]$ git add  typescript
+[li11@ehscmplp07/latimer mixturemodel]$ git commit -m ",a[K[Kmajor changes"
+[master 5eeb959] major changes
+ 10 files changed, 1140 insertions(+), 440 deletions(-)
+ create mode 100644 Scripts/predModHongMod_v1.R
+ rename modeling/{ => log_file_04252014}/log_param2.txt (100%)
+ rename modeling/{ => log_file_04252014}/log_param3.txt (100%)
+ rename modeling/{ => log_file_04252014}/log_param4.txt (100%)
+ rename modeling/{ => log_file_04252014}/model-log-04222014.rtf (100%)
+ create mode 100644 reconData/para2/log_param1.txt
+ create mode 100644 reconData/para2/log_param4.txt
+ create mode 100644 reconData/para2/recon_3classes_para1.txt
+ create mode 100644 typescript
+[li11@ehscmplp07/latimer mixturemodel]$ git push origin master
+
+(gnome-ssh-askpass:28401): Gtk-WARNING **: cannot open display:  
+[li11@ehscmplp07/latimer mixturemodel]$ git push origin master
+
+(gnome-ssh-askpass:28407): Gtk-WARNING **: cannot open display:  
+[li11@ehscmplp07/latimer mixturemodel]$ git commit[K[K[K[K[K[K[K[K[Kit push origin mastercommit -m "major changes"
+# On branch master
+# Your branch is ahead of 'origin/master' by 1 commit.
+#
+nothing to commit (working directory clean)
+[li11@ehscmplp07/latimer mixturemodel]$ git stuat[K[K[Katus 
+# On branch master
+# Your branch is ahead of 'origin/master' by 1 commit.
+#
+nothing to commit (working directory clean)
+[li11@ehscmplp07/latimer mixturemodel]$ git push origin master 
+
+(gnome-ssh-askpass:28422): Gtk-WARNING **: cannot open display:  
+[li11@ehscmplp07/latimer mixturemodel]$ git [K[K[K[Kexu[Kit
+exit
+
+Script done on Tue 06 May 2014 04:49:58 PM EDT
