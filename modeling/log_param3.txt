@@ -1,0 +1,190 @@
+New trial 09172014This is the prediction with SVM
+
+Confusion Matrix and Statistics
+
+          Reference
+Prediction  c  k  n
+         c 27  3  4
+         k  0 10  6
+         n  0 11 20
+
+Overall Statistics
+                                          
+               Accuracy : 0.7037          
+                 95% CI : (0.5919, 0.8001)
+    No Information Rate : 0.3704          
+    P-Value [Acc > NIR] : 1.18e-09        
+                                          
+                  Kappa : 0.5509          
+ Mcnemar's Test P-Value : 0.03722         
+
+Statistics by Class:
+
+                     Class: c Class: k Class: n
+Sensitivity            1.0000   0.4167   0.6667
+Specificity            0.8704   0.8947   0.7843
+Pos Pred Value         0.7941   0.6250   0.6452
+Neg Pred Value         1.0000   0.7846   0.8000
+Prevalence             0.3333   0.2963   0.3704
+Detection Rate         0.3333   0.1235   0.2469
+Detection Prevalence   0.4198   0.1975   0.3827
+Balanced Accuracy      0.9352   0.6557   0.7255
+
+This is the prediction with random forest
+
+Confusion Matrix and Statistics
+
+          Reference
+Prediction  c  k  n
+         c 25  0  1
+         k  2  9 11
+         n  0 15 18
+
+Overall Statistics
+                                          
+               Accuracy : 0.642           
+                 95% CI : (0.5277, 0.7455)
+    No Information Rate : 0.3704          
+    P-Value [Acc > NIR] : 6.555e-07       
+                                          
+                  Kappa : 0.4589          
+ Mcnemar's Test P-Value : 0.3061          
+
+Statistics by Class:
+
+                     Class: c Class: k Class: n
+Sensitivity            0.9259   0.3750   0.6000
+Specificity            0.9815   0.7719   0.7059
+Pos Pred Value         0.9615   0.4091   0.5455
+Neg Pred Value         0.9636   0.7458   0.7500
+Prevalence             0.3333   0.2963   0.3704
+Detection Rate         0.3086   0.1111   0.2222
+Detection Prevalence   0.3210   0.2716   0.4074
+Balanced Accuracy      0.9537   0.5735   0.6529
+
+This is the prediction with regularized random forest
+
+Confusion Matrix and Statistics
+
+          Reference
+Prediction  c  k  n
+         c 25  0  1
+         k  2 11 11
+         n  0 13 18
+
+Overall Statistics
+                                          
+               Accuracy : 0.6667          
+                 95% CI : (0.5532, 0.7676)
+    No Information Rate : 0.3704          
+    P-Value [Acc > NIR] : 6.151e-08       
+                                          
+                  Kappa : 0.4976          
+ Mcnemar's Test P-Value : 0.3666          
+
+Statistics by Class:
+
+                     Class: c Class: k Class: n
+Sensitivity            0.9259   0.4583   0.6000
+Specificity            0.9815   0.7719   0.7451
+Pos Pred Value         0.9615   0.4583   0.5806
+Neg Pred Value         0.9636   0.7719   0.7600
+Prevalence             0.3333   0.2963   0.3704
+Detection Rate         0.3086   0.1358   0.2222
+Detection Prevalence   0.3210   0.2963   0.3827
+Balanced Accuracy      0.9537   0.6151   0.6725
+
+This is the prediction with k-nearest neighbor
+
+Confusion Matrix and Statistics
+
+          Reference
+Prediction  c  k  n
+         c 25  0  4
+         k  2  9 11
+         n  0 15 15
+
+Overall Statistics
+                                          
+               Accuracy : 0.6049          
+                 95% CI : (0.4901, 0.7119)
+    No Information Rate : 0.3704          
+    P-Value [Acc > NIR] : 1.552e-05       
+                                          
+                  Kappa : 0.4041          
+ Mcnemar's Test P-Value : 0.08522         
+
+Statistics by Class:
+
+                     Class: c Class: k Class: n
+Sensitivity            0.9259   0.3750   0.5000
+Specificity            0.9259   0.7719   0.7059
+Pos Pred Value         0.8621   0.4091   0.5000
+Neg Pred Value         0.9615   0.7458   0.7059
+Prevalence             0.3333   0.2963   0.3704
+Detection Rate         0.3086   0.1111   0.1852
+Detection Prevalence   0.3580   0.2716   0.3704
+Balanced Accuracy      0.9259   0.5735   0.6029
+
+This is the prediction with neural network
+Confusion Matrix and Statistics
+
+          Reference
+Prediction  c  k  n
+         c 26  0  1
+         k  0 12  3
+         n  1 12 26
+
+Overall Statistics
+                                          
+               Accuracy : 0.7901          
+                 95% CI : (0.6854, 0.8727)
+    No Information Rate : 0.3704          
+    P-Value [Acc > NIR] : 1.437e-14       
+                                          
+                  Kappa : 0.6799          
+ Mcnemar's Test P-Value : NA              
+
+Statistics by Class:
+
+                     Class: c Class: k Class: n
+Sensitivity            0.9630   0.5000   0.8667
+Specificity            0.9815   0.9474   0.7451
+Pos Pred Value         0.9630   0.8000   0.6667
+Neg Pred Value         0.9815   0.8182   0.9048
+Prevalence             0.3333   0.2963   0.3704
+Detection Rate         0.3210   0.1481   0.3210
+Detection Prevalence   0.3333   0.1852   0.4815
+Balanced Accuracy      0.9722   0.7237   0.8059
+
+This is the prediction with naive bayes
+
+Confusion Matrix and Statistics
+
+          Reference
+Prediction  c  k  n
+         c  0  0  0
+         k 17  6  4
+         n 10 18 26
+
+Overall Statistics
+                                          
+               Accuracy : 0.3951          
+                 95% CI : (0.2881, 0.5099)
+    No Information Rate : 0.3704          
+    P-Value [Acc > NIR] : 0.3618          
+                                          
+                  Kappa : 0.0755          
+ Mcnemar's Test P-Value : 7.827e-08       
+
+Statistics by Class:
+
+                     Class: c Class: k Class: n
+Sensitivity            0.0000  0.25000   0.8667
+Specificity            1.0000  0.63158   0.4510
+Pos Pred Value            NaN  0.22222   0.4815
+Neg Pred Value         0.6667  0.66667   0.8519
+Prevalence             0.3333  0.29630   0.3704
+Detection Rate         0.0000  0.07407   0.3210
+Detection Prevalence   0.0000  0.33333   0.6667
+Balanced Accuracy      0.5000  0.44079   0.6588
