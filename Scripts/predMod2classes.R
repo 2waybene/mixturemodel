@@ -74,7 +74,6 @@ nrow(labelTest)
 
 
 
-##	rpart not working!!!
 library(rpart)
 rpart1 <- rpart(label ~ ., data = labelTrain, 
                 control = rpart.control(maxdepth = 2))
