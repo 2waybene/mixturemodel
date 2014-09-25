@@ -136,8 +136,8 @@ RFTune <- train(label ~.,data=labelTrain,
                  metric = "ROC",
                  trControl = cvCtrl)
 
-RFPred2 <- predict(RFtune, labelTest)
-confusionMatrix(RFPred, labelTest$label)
+RFPred2 <- predict(RFTune, labelTest)
+confusionMatrix(RFPred2, labelTest$label)
 
 RFtrain <- randomForest(label ~.,data=labelTrain )
 RFPred <- predict(RFtrain, labelTest)
@@ -183,7 +183,7 @@ confusionMatrix(nnetPred , labelTest$label)
 
 cvValues <- resamples(list(CART = rpartTune, SVM = svmTune, 
                            C5.0 = c5Tune, FDA = fdaTune, 
-                           logistic = plrTune, nnet = nnetFit,
+                           plr = plrTune, nnet = nnetFit,
 					knn = knnFit1, rrf = RFTune)
                )
 
@@ -194,6 +194,25 @@ cvValues <- resamples(list(CART = rpartTune, SVM = svmTune,
 
 summary(cvValues)
 
+
+##==========================================================
+##	Learning model training with Caret
+##	http://topepo.github.io/caret/training.html#control
+##==========================================================
+trellis.par.set(caretTheme())
+plot(nnetFit)
+plot(knnFit1)
+plot(RFTune)
+plot(svmTune)
+
+
+
+
+##=================
+#	box plot
+##=================
+trellis.par.set()
+bwplot(cvValues, layout = c(3, 1))
 
 
 ###############################################################
