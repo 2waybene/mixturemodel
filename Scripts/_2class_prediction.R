@@ -11,6 +11,8 @@ file.olk <- data.k
 
 ## create data partition
 
+
+
 inTrainingSet <- createDataPartition(file2classes$label, p=.7, list=FALSE)
 labelTrain <- file2classes[ inTrainingSet,]
 labelTest <- file2classes[-inTrainingSet,]
@@ -26,9 +28,9 @@ library(partykit)
 rpartFull <- rpart(label ~ ., data = labelTrain)
 rpartFulla <- as.party(rpartFull)
 plot(rpartFulla)
-
+confusionMatrix(rpartPred, labe
 rpartPred <- predict(rpartFull, labelTest, type = "class")
-confusionMatrix(rpartPred, labelTest$label)   # requires 2 factor vectors
+lTest$label)   # requires 2 factor vectors
 
 
 

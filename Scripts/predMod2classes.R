@@ -27,8 +27,8 @@ library(caret)
 setwd(paste (root, "/myGit/mixturemodel/reconData/para2/", sep=""))
 data <- read.table("recon_3classes_para3.txt", header=TRUE, sep = "\t")
 
-
-
+data <- read.table("recon_3classes_para1.txt", header=TRUE, sep = "\t")
+data <- read.table("recon_3classes_para2.txt", header=TRUE, sep = "\t")
 
 ##	data cleaning
 
@@ -51,6 +51,9 @@ labels <- as.vector(data.2.classes$label)
 data.2.classes <- data.2.classes[,-16]
 data.2.classes <- cbind (data.2.classes, label=labels)
 table(factor(data.2.classes$label))
+
+
+
 
 #levels(data.2.classes$label) <- factor (data.2.classes$label)
 
