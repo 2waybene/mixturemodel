@@ -275,6 +275,48 @@ confusionMatrix(nbPred, labelTest$label)
 ##  Author: Newly tested ONLY on normal and cancer sample
 ##  Author: Jianying
 ##=========================================================
+
+
+#===============================================
+##	Set up os paths
+##==============================================
+mac.os  <- "/Users/li11/"
+linux   <- "~/"
+windows <- "X:/"
+
+root <- windows
+#root <- linux 
+#root <- mac.os
+##===============================================
+
+
+library(caret)
+##===================================
+## set up working directory
+## and getting the dataset
+##===================================
+
+setwd(paste (root, "/myGit/mixturemodel/reconData/para2/", sep=""))
+data <- read.table("recon_3classes_para3.txt", header=TRUE, sep = "\t")
+
+data <- read.table("recon_3classes_para1.txt", header=TRUE, sep = "\t")
+data <- read.table("recon_3classes_para2.txt", header=TRUE, sep = "\t")
+
+##	data cleaning
+
+var0 <- unlist(lapply(data, function(x) 0 == var(if (is.factor(x)) as.integer(x) else x)))
+dataN0 <- data[,-which(var0)]
+# drop the first column of ID?
+dataN0[,1] <- NULL
+ 
+
+  ##	Retain data ONLY with two classes
+
+data.2.classes <- dataN0[-which (dataN0$label == "k"),]
+data.k <- dataN0[which (dataN0$label == "k"),]
+
+
+
 library(caret)
 
 file2classes  <- data.2.classes
