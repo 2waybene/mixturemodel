@@ -306,6 +306,23 @@ confusionMatrix(svmPred, labelTest$label)
 
 svmPredProb <- predict(svmTune, labelTest , type = "prob")
 
+boxplot(svmPredProb)
+#points(svmPredProb)
+
+str(svmPredProb)
+label.c.as.c <- svmPredProb$c[labelTest$label=="c"]
+label.n.as.c <- svmPredProb$c[labelTest$label=="n"]
+
+svmPredProb$c =="c"
+
+
+boxplot(svmPredProb, outpch = NA)
+stripchart(svmPredProb,
+            vertical = TRUE, method = "jitter",
+            pch = 21, col = "maroon", bg = "bisque",
+            add = TRUE)
+
+
 
 ##=============================
 ##	Test on olk sample
@@ -313,8 +330,16 @@ svmPredProb <- predict(svmTune, labelTest , type = "prob")
 dim(file.olk)
 svmPred.k.prob  <- predict(svmTune, file.olk, type = "prob")
 
+
+
 den.c <- density(svmPred.k.prob$c)
+label.k.as.c <- svmPred.k.prob$c
 den.n <- density(svmPred.k.prob$n)
+
+
+length(which(svmPred.k.prob$c > 0.5))
+length(which(svmPred.k.prob$n > 0.5))
+
 
 plot( den.c)
 lines( den.n, col = "red")
@@ -325,4 +350,21 @@ plot(density(svmPred.k.prob$c))
 plot(density(svmPred.k.prob$n))
 pairs(svmPred.k.prob)
 
+##==============================
+##	To get the figure 6
+##==============================
 
+rep ("c", length(label.c.as.c))
+rep ("n", length(label.n.as.c))
+rep ("k", length(label.k.as.c))
+
+predicted.c <- list (label = as.vector(c(rep ("n", length(label.n.as.c)), rep ("k", length(label.k.as.c)), rep ("c", length(label.c.as.c)))), 
+prob = as.vector(c( svmPredProb$c[labelTest$label=="n"], svmPred.k.prob$c, svmPredProb$c[labelTest$label=="c"])))
+str(predicted.c)
+
+boxplot(prob ~ label, data = as.data.frame(predicted.c), main = "Samples (by label) predicted as OSCC", ylab = "Probability", outpch = NA)
+stripchart(prob ~ label, data = as.data.frame(predicted.c),
+            vertical = TRUE, method = "jitter",
+            pch = 21, col = "maroon", bg = "bisque",
+            add = TRUE)
+mtext ("Prediction probability")
