@@ -139,7 +139,7 @@ dim(file.olk)
 svmPred.k.prob  <- predict(svmTune, file.olk, type = "prob")
 rownames(file.olk)
 rownames(svmPred.k.prob) <- rownames(file.olk)
-write.table (svmPred.k.prob, file = "prediction_on_olk.txt", row.name = TRUE,sep="\t")
+#write.table (svmPred.k.prob, file = "prediction_on_olk.txt", row.name = TRUE,sep="\t")
 
 den.c <- density(svmPred.k.prob$c)
 label.k.as.c <- svmPred.k.prob$c
@@ -184,13 +184,17 @@ rep ("k", length(label.k.as.c))
 predicted.c <- list (label = as.vector(c(rep ("n", length(label.n.as.c)), rep ("k", length(label.k.as.c)), rep ("c", length(label.c.as.c)))), 
 prob = as.vector(c( svmPredProb$c[labelTest$label=="n"], svmPred.k.prob$c, svmPredProb$c[labelTest$label=="c"])))
 str(predicted.c)
-
-boxplot(prob ~ label, data = as.data.frame(predicted.c), main = "Samples (by label) predicted as OSCC", ylab = "Probability", outpch = NA)
+colnames(as.data.frame(predicted.c))
+predicted.c$label[predicted.c$label == "n"] <- "Normal"
+predicted.c$label[predicted.c$label == "k"] <- "OLK"
+predicted.c$label[predicted.c$label == "c"] <- "OSCC"
+#boxplot(prob ~ label, data = as.data.frame(predicted.c), main = "Samples (by label) predicted as OSCC", ylab = "Probability", outpch = NA)
+boxplot(prob ~ label, data = as.data.frame(predicted.c),  ylab = "Oral Cancer Risk Index (OCRI)", outpch = NA)
 stripchart(prob ~ label, data = as.data.frame(predicted.c),
             vertical = TRUE, method = "jitter",
             pch = 21, col = "maroon", bg = "bisque",
             add = TRUE)
-mtext ("Prediction probability")
+#mtext ("Prediction probability")
 
 
 
