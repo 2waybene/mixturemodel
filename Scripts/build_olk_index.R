@@ -69,6 +69,7 @@ dim(data.2.classes)
 
 
 	## create data partition
+set.seed(12345)
 	inTrainingSet <- createDataPartition(file2classes$label, p=.7, list=FALSE)
 	labelTrain <- file2classes[ inTrainingSet,]
 	labelTest <- file2classes[-inTrainingSet,]
@@ -136,8 +137,9 @@ stripchart(svmPredProb,
 ##=============================
 dim(file.olk)
 svmPred.k.prob  <- predict(svmTune, file.olk, type = "prob")
-
-
+rownames(file.olk)
+rownames(svmPred.k.prob) <- rownames(file.olk)
+write.table (svmPred.k.prob, file = "prediction_on_olk.txt", row.name = TRUE,sep="\t")
 
 den.c <- density(svmPred.k.prob$c)
 label.k.as.c <- svmPred.k.prob$c
