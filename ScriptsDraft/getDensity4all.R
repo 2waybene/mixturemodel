@@ -15,16 +15,24 @@ windows <- "X:/"
 
 ##	package needed
 root <- windows
+root <- mac.os
 
 
 
-dataDir <- paste (root, "myGit/mixturemodel/data/dt_01232014/", sep="")
-workingDir <- paste (root, "myGit/mixturemodel/workingDir/", sep="")
+dataDir <- paste (root, "myGit/mixturemodel/data/dt_01232014/Normal/", sep="")
+#workingDir <- paste (root, "myGit/mixturemodel/workingDir/", sep="")
+workingDir <- paste (root, "myGit/mixturemodel/DIdensities/Normal/", sep="")
+
+
+dataDir <- paste (root, "myGit/mixturemodel/data/dt_01232014/OLK/", sep="")
+workingDir <- paste (root, "myGit/mixturemodel/DIdensities/OLK/", sep="")
+
 setwd(workingDir)
+getwd()
 
 fn <- list.files (dataDir, pattern = ".csv")
 numOfFile <- length(fn)
-
+fn
 for (i in 1:numOfFile)
 {
 	title = paste ("sample_", sub(".csv", "", fn[i]), sep="")
