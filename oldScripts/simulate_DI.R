@@ -11,7 +11,7 @@
 
 
 
-source("x:/myGit/mixturemodel/Scripts/mixtureModelFunctions.R")
+source("x:/myGit/mixturemodel/ScriptsDraft/mixtureModelFunctions.R")
 #source("/Users/li11/myGit/mixturemodel/Scripts/mixtureModelFunctions.R")
 
 

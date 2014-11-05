@@ -18,6 +18,9 @@ root <- windows
 root <- mac.os
 
 
+dataDir <- paste (root, "myGit/mixturemodel/data/dt_01232014/OSCC/", sep="")
+workingDir <- paste (root, "myGit/mixturemodel/DIdensities/OSCC/", sep="")
+
 
 dataDir <- paste (root, "myGit/mixturemodel/data/dt_01232014/Normal/", sep="")
 #workingDir <- paste (root, "myGit/mixturemodel/workingDir/", sep="")
