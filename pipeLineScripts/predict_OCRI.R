@@ -175,7 +175,7 @@ plot(density(svmPred.k.prob$n))
 pairs(svmPred.k.prob)
 
 ##==============================
-##	To get the figure 6
+##	To get the figure 5
 ##==============================
 
 rep ("c", length(label.c.as.c))
@@ -198,4 +198,12 @@ stripchart(prob ~ label, data = as.data.frame(predicted.c),
 #mtext ("Prediction probability")
 
 
+##==============================
+##	To get the figure 6 on
+#	128141
+##==============================
 
+svmPred.k.prob
+sub ("ID_", "", rownames(svmPred.k.prob))
+plot(svmPred.k.prob$c, pch = "")
+text(svmPred.k.prob$c, lab = sub ("ID_", "", rownames(svmPred.k.prob)))
