@@ -1,5 +1,6 @@
 ##=========================================================
-##  File: _2class_prediction_model_comparison_02.R
+##  File: _final_figure4.R
+# NOT working now!!
 ##  Author: Jianying Li
 ##  Comment: process the date new data only with two classes
 ##		 run through six different models and select
@@ -32,8 +33,8 @@ setwd(paste (root, "/myGit/mixturemodel/reconData/para2/", sep=""))
 #data <- read.table("recon_3classes_para3.txt", header=TRUE, sep = "\t")
 
 #data <- read.table("recon_3classes_para1.txt", header=TRUE, sep = "\t")
-data <- read.table("recon_3classes_para2.txt", header=TRUE, sep = "\t")
-
+#data <- read.table("recon_3classes_para2.txt", header=TRUE, sep = "\t")
+data <- read.table("recon_3classes_para3.txt", header=TRUE, sep = "\t")
 ##	data cleaning
 
 var0 <- unlist(lapply(data, function(x) 0 == var(if (is.factor(x)) as.integer(x) else x)))
@@ -59,7 +60,7 @@ file2classes  <- data.2.classes
 
 
 ## create data partition
-
+set.seed(1)
 inTrainingSet <- createDataPartition(file2classes$label, p=.7, list=FALSE)
 labelTrain <- file2classes[ inTrainingSet,]
 labelTest <- file2classes[-inTrainingSet,]
@@ -166,6 +167,13 @@ cvValues <- resamples(list(CART = rpartTune, SVM = svmTune,
 ## Slide 119: Collecting Results With resamples
 
 summary(cvValues)
+trellis.par.set()
+bwplot(cvValues, layout = c(3, 1))
+
+
+
+
+
 
 ##==========================================================
 ##	Learning model training with Caret
@@ -178,10 +186,9 @@ trellis.par.set(caretTheme())
 ##	To reproduce teh figure 4
 ##================================
 setwd(paste (root, "/myGit/mixturemodel/manuscript/_4ModlSelection/", sep=""))
-
 getwd()
 
-figure4 =  "FirstTrial_01.jpeg"
+figure4 =  "FirstTrial_02.jpeg"
 
 #jpeg (figure4)
 ##=================

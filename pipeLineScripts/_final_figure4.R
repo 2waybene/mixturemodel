@@ -1,5 +1,5 @@
 ##=========================================================
-##  File: _2class_prediction_model_comparison_02.R
+##  File: _final_figure4.R
 ##  Author: Jianying Li
 ##  Comment: process the date new data only with two classes
 ##		 run through six different models and select
@@ -29,10 +29,10 @@ library(caret)
 ##===================================
 
 setwd(paste (root, "/myGit/mixturemodel/reconData/para2/", sep=""))
-#data <- read.table("recon_3classes_para3.txt", header=TRUE, sep = "\t")
+data <- read.table("recon_3classes_para3.txt", header=TRUE, sep = "\t")
 
 #data <- read.table("recon_3classes_para1.txt", header=TRUE, sep = "\t")
-data <- read.table("recon_3classes_para2.txt", header=TRUE, sep = "\t")
+#data <- read.table("recon_3classes_para2.txt", header=TRUE, sep = "\t")
 
 ##	data cleaning
 
@@ -178,17 +178,16 @@ trellis.par.set(caretTheme())
 ##	To reproduce teh figure 4
 ##================================
 setwd(paste (root, "/myGit/mixturemodel/manuscript/_4ModlSelection/", sep=""))
-
 getwd()
 
-figure4 =  "FirstTrial_01.jpeg"
+figure4 =  "FirstTrial_02.jpeg"
 
-#jpeg (figure4)
+jpeg (figure4)
 ##=================
 #	box plot
 ##=================
 trellis.par.set()
 bwplot(cvValues, layout = c(3, 1))
-#dev.off()
+dev.off()
 
 
