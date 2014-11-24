@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 ##=========================================================
 ##  File: _final_figure4.R
 ##  Author: Jianying Li
@@ -6,7 +6,7 @@
 ##		 run through six different models and select
 ##		 SAM as a candidate
 ##		 The second parameter set seems work the best.
-##  Extended (from _01): trying to predict "olk" class
+##  NOT current!! JYL Just for a record keeping
 ##=========================================================
 
 
@@ -52,7 +52,13 @@ dataN0[,1] <- NULL
   ##	Retain data ONLY with two classes
 
 
+  ##	Retain data ONLY with two classes
 
+data.2.classes <- dataN0[-which (dataN0$label == "k"),]
+data.k <- dataN0[which (dataN0$label == "k"),]
+
+
+dim(data.2.classes)
 
 labels <- as.vector(data.2.classes$label)
 
@@ -287,7 +293,8 @@ cvCtrl <- trainControl(method = "repeatedcv", repeats = 5,
                        classProbs = TRUE)
 
 
-set.seed(1)
+#set.seed(1)
+set.seed(12345)
 rpartTune <- train(label ~ ., data = labelTrain, 
                    method = "rpart",
                    tuneLength = 10,
@@ -297,7 +304,8 @@ rpartTune <- train(label ~ ., data = labelTrain,
 ##====================================
 ##	SVM Example 
 ##====================================
-set.seed(1)
+#set.seed(1)
+set.seed(12345)
 svmTune <- train(label ~ ., 
 		    data = labelTrain,
 
@@ -315,6 +323,7 @@ svmTune <- train(label ~ .,
 ##======================================
 ##	partial logistic regression
 ##========================================
+set.seed(12345)
 plrTune <- train(label ~ ., data = labelTrain,  
                  method = "multinom",
                  preProc = c("center", "scale"),
@@ -329,7 +338,7 @@ plrTune <- train(label ~ ., data = labelTrain,
 ##========================
 
 library(randomForest)
-
+set.seed(12345)
 RFTune <- train(label ~.,data=labelTrain, 
 				method = "rf",
 		     tuneLength = 12,
@@ -339,7 +348,7 @@ RFTune <- train(label ~.,data=labelTrain,
 ##========================
 ##	knn
 ##========================
-
+set.seed(12345)
 knnFit1 <- train(label ~.,data=labelTrain, 
                  method = "knn",
                  preProcess = c("center", "scale"),
@@ -352,6 +361,7 @@ knnFit1 <- train(label ~.,data=labelTrain,
 ##========================
 
 library(MASS)
+set.seed(12345)
 nnetFit <- train(label ~.,data=labelTrain, 
                  method = "nnet",
                  preProcess = "range", 
@@ -364,7 +374,7 @@ nnetFit <- train(label ~.,data=labelTrain,
 
 ###############################################################
 ## Slide 118: Collecting Results With resamples
-
+set.seed(12345)
 cvValues <- resamples(list(CART = rpartTune, SVM = svmTune, 
                            plr = plrTune, nnet = nnetFit,
 					knn = knnFit1, rrf = RFTune)
