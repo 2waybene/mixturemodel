@@ -1,6 +1,7 @@
 ##=========================================================
-##  File: _final_figure4.R
+##  File: Figure4.R
 ##  Author: Jianying Li
+##  Initial tested as: _final_figure4.R
 ##  Comment: to produce figure 4
 ##=========================================================
 

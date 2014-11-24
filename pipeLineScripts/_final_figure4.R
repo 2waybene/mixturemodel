@@ -93,7 +93,8 @@ rpartTune <- train(label ~ ., data = labelTrain,
 ##====================================
 ##	SVM Example 
 ##====================================
-set.seed(1234)
+#set.seed(1234)
+set.seed(1)
 svmTune <- train(label ~ ., 
 		    data = labelTrain,
 
@@ -391,7 +392,7 @@ trellis.par.set(caretTheme())
 setwd(paste (root, "/myGit/mixturemodel/manuscript/_4ModlSelection/", sep=""))
 getwd()
 
-figure4 =  "FirstTrial_02.jpeg"
+figure4 =  "Figure4_final_11242014.jpeg"
 
 jpeg (figure4)
 ##=================
@@ -400,6 +401,16 @@ jpeg (figure4)
 trellis.par.set()
 bwplot(cvValues, layout = c(3, 1))
 dev.off()
+
+
+tiff(file="Figure4_final_11242014.tiff", height = 12, width = 17, units = 'cm',
+     compression = "lzw", res = 300)
+trellis.par.set()
+bwplot(cvValues, layout = c(3, 1))
+dev.off()
+
+
+
 
 
 >>>>>>> ecfaa69d1e40bc2ba4e111f8ff7a560d43067c22
