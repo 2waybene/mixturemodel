@@ -29,10 +29,16 @@ library(caret)
 ##===================================
 
 setwd(paste (root, "/myGit/mixturemodel/reconData/para2/", sep=""))
-data <- read.table("recon_3classes_para3.txt", header=TRUE, sep = "\t")
+
 
 #data <- read.table("recon_3classes_para1.txt", header=TRUE, sep = "\t")
-#data <- read.table("recon_3classes_para2.txt", header=TRUE, sep = "\t")
+
+##	Trying to get the best figure 2, but have to use para2
+##==============================================================
+data <- read.table("recon_3classes_para2.txt", header=TRUE, sep = "\t")
+
+
+#data <- read.table("recon_3classes_para3.txt", header=TRUE, sep = "\t")
 
 ##	data cleaning
 
@@ -44,11 +50,8 @@ dataN0[,1] <- NULL
 
   ##	Retain data ONLY with two classes
 
-data.2.classes <- dataN0[-which (dataN0$label == "k"),]
-data.k <- dataN0[which (dataN0$label == "k"),]
 
 
-dim(data.2.classes)
 
 labels <- as.vector(data.2.classes$label)
 
@@ -59,7 +62,7 @@ file2classes  <- data.2.classes
 
 
 ## create data partition
-
+set.seed(1)
 inTrainingSet <- createDataPartition(file2classes$label, p=.7, list=FALSE)
 labelTrain <- file2classes[ inTrainingSet,]
 labelTest <- file2classes[-inTrainingSet,]
@@ -89,7 +92,7 @@ rpartTune <- train(label ~ ., data = labelTrain,
 ##====================================
 ##	SVM Example 
 ##====================================
-#set.seed(1)
+set.seed(1234)
 svmTune <- train(label ~ ., 
 		    data = labelTrain,
 
@@ -107,6 +110,7 @@ svmTune <- train(label ~ .,
 ##======================================
 ##	partial logistic regression
 ##========================================
+set.seed(1)
 plrTune <- train(label ~ ., data = labelTrain,  
                  method = "multinom",
                  preProc = c("center", "scale"),
@@ -121,7 +125,7 @@ plrTune <- train(label ~ ., data = labelTrain,
 ##========================
 
 library(randomForest)
-
+set.seed(1)
 RFTune <- train(label ~.,data=labelTrain, 
 				method = "rf",
 		     tuneLength = 12,
@@ -131,7 +135,7 @@ RFTune <- train(label ~.,data=labelTrain,
 ##========================
 ##	knn
 ##========================
-
+set.seed(1)
 knnFit1 <- train(label ~.,data=labelTrain, 
                  method = "knn",
                  preProcess = c("center", "scale"),
@@ -144,6 +148,7 @@ knnFit1 <- train(label ~.,data=labelTrain,
 ##========================
 
 library(MASS)
+set.seed(1)
 nnetFit <- train(label ~.,data=labelTrain, 
                  method = "nnet",
                  preProcess = "range", 
@@ -156,7 +161,7 @@ nnetFit <- train(label ~.,data=labelTrain,
 
 ###############################################################
 ## Slide 118: Collecting Results With resamples
-
+set.seed(1)
 cvValues <- resamples(list(CART = rpartTune, SVM = svmTune, 
                            plr = plrTune, nnet = nnetFit,
 					knn = knnFit1, rrf = RFTune)
@@ -166,6 +171,13 @@ cvValues <- resamples(list(CART = rpartTune, SVM = svmTune,
 ## Slide 119: Collecting Results With resamples
 
 summary(cvValues)
+#trellis.par.set()
+bwplot(cvValues, layout = c(3, 1))
+
+
+
+
+
 
 ##==========================================================
 ##	Learning model training with Caret
