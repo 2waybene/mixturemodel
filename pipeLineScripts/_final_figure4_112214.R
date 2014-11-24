@@ -170,28 +170,3 @@ trellis.par.set()
 bwplot(cvValues, layout = c(3, 1))
 
 
-
-##==========================================================
-##	Learning model training with Caret
-##	http://topepo.github.io/caret/training.html#control
-##==========================================================
-trellis.par.set(caretTheme())
-
-
-##================================
-##	To reproduce teh figure 4
-##================================
-setwd(paste (root, "/myGit/mixturemodel/manuscript/_4ModlSelection/", sep=""))
-getwd()
-
-figure4 =  "FirstTrial_02.jpeg"
-
-jpeg (figure4)
-##=================
-#	box plot
-##=================
-trellis.par.set()
-bwplot(cvValues, layout = c(3, 1))
-dev.off()
-
-
