@@ -189,12 +189,23 @@ colnames(as.data.frame(predicted.c))
 predicted.c$label[predicted.c$label == "n"] <- "Normal"
 predicted.c$label[predicted.c$label == "k"] <- "OLK"
 predicted.c$label[predicted.c$label == "c"] <- "OSCC"
-#boxplot(prob ~ label, data = as.data.frame(predicted.c), main = "Samples (by label) predicted as OSCC", ylab = "Probability", outpch = NA)
+
+##================================
+setwd(paste (root, "/myGit/mixturemodel/manuscript/figures/", sep=""))
+getwd()
+
+
+tiff(file="Figure5__v3_final_11242014.tiff", height = 14, width = 15, units = 'cm',
+     compression = "lzw", res = 300)
+
+
 boxplot(prob ~ label, data = as.data.frame(predicted.c),  ylab = "Oral Cancer Risk Index (OCRI)", outpch = NA)
 stripchart(prob ~ label, data = as.data.frame(predicted.c),
             vertical = TRUE, method = "jitter",
             pch = 21, col = "maroon", bg = "bisque",
             add = TRUE)
+
+dev.off()
 #mtext ("Prediction probability")
 
 
