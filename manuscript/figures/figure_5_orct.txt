@@ -1,0 +1,27 @@
+Support Vector Machines with Radial Basis Function Kernel 
+
+138 samples
+ 15 predictor
+  2 classes: 'c', 'n' 
+
+Pre-processing: centered, scaled 
+Resampling: 
+
+Summary of sample sizes: 137, 137, 137, 137, 137, 137, ... 
+
+Resampling results across tuning parameters:
+
+  C      ROC    Sens   Spec 
+   0.25  0.942  0.909  0.903
+   0.50  0.935  0.909  0.944
+   1.00  0.945  0.909  0.958
+   2.00  0.950  0.909  0.958
+   4.00  0.967  0.909  0.958
+   8.00  0.966  0.909  0.958
+  16.00  0.967  0.894  0.944
+  32.00  0.968  0.939  0.944
+  64.00  0.960  0.939  0.931
+
+Tuning parameter 'sigma' was held constant at a value of 0.6455962
+ROC was used to select the optimal model using  the largest value.
+The final values used for the model were sigma = 0.6455962 and C = 32. 
