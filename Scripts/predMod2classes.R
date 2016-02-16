@@ -27,8 +27,8 @@ library(caret)
 setwd(paste (root, "/myGit/mixturemodel/reconData/para2/", sep=""))
 data <- read.table("recon_3classes_para3.txt", header=TRUE, sep = "\t")
 
-data <- read.table("recon_3classes_para1.txt", header=TRUE, sep = "\t")
-data <- read.table("recon_3classes_para2.txt", header=TRUE, sep = "\t")
+#data <- read.table("recon_3classes_para1.txt", header=TRUE, sep = "\t")
+#data <- read.table("recon_3classes_para2.txt", header=TRUE, sep = "\t")
 
 ##	data cleaning
 
